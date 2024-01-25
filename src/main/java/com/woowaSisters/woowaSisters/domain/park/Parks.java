@@ -15,7 +15,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @Table(name = "park")
 @NoArgsConstructor
-@EnableJpaRepositories
 public class Parks {
 
     @Id
