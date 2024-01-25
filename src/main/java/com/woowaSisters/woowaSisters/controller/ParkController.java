@@ -17,7 +17,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
-@Controller
 @RequestMapping("/api/parkInfo")
 @RequiredArgsConstructor
 public class ParkController {
