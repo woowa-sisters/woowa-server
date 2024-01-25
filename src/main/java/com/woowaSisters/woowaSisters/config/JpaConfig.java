@@ -17,23 +17,15 @@ import java.util.Properties;
 
 @Configuration
 @EnableJpaRepositories(basePackages = {
-<<<<<<< HEAD
-        /*"com.hangangFlow.woowaSisters.domain.user",
-        "com.hangangFlow.woowaSisters.domain.park",
-        "com.hangangFlow.woowaSisters.domain.bookmark",
-        "com.hangangFlow.woowaSisters.domain.community",
-        "com.hangangFlow.woowaSisters.domain.likes",
-        "com.hangangFlow.woowaSisters.domain.test",*/
-        "com.woowaSisters.woowaSisters.domain.meeting"
-=======
+        "com.woowaSisters.woowaSisters.domain.meeting",
         "com.woowaSisters.woowaSisters.domain.user",
         "com.woowaSisters.woowaSisters.domain.park",
         "com.woowaSisters.woowaSisters.domain.bookmark",
         "com.woowaSisters.woowaSisters.domain.community",
         "com.woowaSisters.woowaSisters.domain.likes",
         "com.woowaSisters.woowaSisters.domain.test",
+        "com.woowaSisters.woowaSisters.domain.meeting"
 
->>>>>>> main
 })
 public class JpaConfig {
     @Bean
@@ -55,22 +47,13 @@ public class JpaConfig {
         LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactoryBean.setDataSource(dataSource);
         entityManagerFactoryBean.setPackagesToScan(
-<<<<<<< HEAD
-                /*"com.hangangFlow.hangangFlow.domain.user",
-                "com.hangangFlow.hangangFlow.domain.park",
-                "com.hangangFlow.hangangFlow.domain.bookmark",
-                "com.hangangFlow.hangangFlow.domain.community",
-                "com.hangangFlow.hangangFlow.domain.likes",
-                "com.hangangFlow.hangangFlow.domain.test"*/
-                "com.woowaSisters.woowaSisters.domain.meeting"
-=======
+                "com.woowaSisters.woowaSisters.domain.meeting",
                 "com.woowaSisters.woowaSisters.domain.user",
                 "com.woowaSisters.woowaSisters.domain.park",
                 "com.woowaSisters.woowaSisters.domain.bookmark",
                 "com.woowaSisters.woowaSisters.domain.community",
                 "com.woowaSisters.woowaSisters.domain.likes",
                 "com.woowaSisters.woowaSisters.domain.test"
->>>>>>> main
         );
 
         JpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
