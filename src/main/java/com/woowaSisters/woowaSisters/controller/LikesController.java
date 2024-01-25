@@ -1,3 +1,4 @@
+/*
 package com.woowaSisters.woowaSisters.controller;
 
 import com.woowaSisters.woowaSisters.domain.community.CommunityRepository;
@@ -38,3 +39,4 @@ public class LikesController {
     }
 
 }
+*/

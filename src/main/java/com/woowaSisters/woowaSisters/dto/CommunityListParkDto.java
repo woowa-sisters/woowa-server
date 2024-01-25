@@ -1,3 +1,4 @@
+/*
 package com.woowaSisters.woowaSisters.dto;
 
 import com.woowaSisters.woowaSisters.domain.community.Community;
@@ -20,3 +21,4 @@ public class CommunityListParkDto {
         this.createdAt = entity.getCreatedAt();
     }
 }
+*/

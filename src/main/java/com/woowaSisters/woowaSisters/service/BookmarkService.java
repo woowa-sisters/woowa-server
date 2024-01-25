@@ -1,3 +1,4 @@
+/*
 package com.woowaSisters.woowaSisters.service;
 
 import com.woowaSisters.woowaSisters.domain.bookmark.Bookmark;
@@ -16,3 +17,4 @@ public interface BookmarkService {
     Bookmark deleteBookmark(UUID bookmarkUuid);
 
 }
+*/

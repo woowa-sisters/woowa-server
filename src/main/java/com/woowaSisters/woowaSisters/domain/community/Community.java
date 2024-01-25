@@ -1,3 +1,4 @@
+/*
 package com.woowaSisters.woowaSisters.domain.community;
 
 
@@ -33,11 +34,11 @@ public class Community {
 
     @CreationTimestamp
     @Column(name = "created_at")
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private final LocalDateTime createdAt = LocalDateTime.now();
 
     @UpdateTimestamp
     @Column(name = "updated_at")
-    private LocalDateTime updatedAt = LocalDateTime.now();
+    private final LocalDateTime updatedAt = LocalDateTime.now();
 
     @ManyToOne
     @JoinColumn(name = "user_uuid")
@@ -69,3 +70,4 @@ public class Community {
     }
 
 }
+*/

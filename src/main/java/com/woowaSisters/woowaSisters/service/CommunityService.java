@@ -1,3 +1,4 @@
+/*
 package com.woowaSisters.woowaSisters.service;
 
 import com.woowaSisters.woowaSisters.domain.community.Community;
@@ -29,3 +30,4 @@ public interface CommunityService {
 
     List<CommunityListParkVO> findAllPark(String parkName);
 }
+*/

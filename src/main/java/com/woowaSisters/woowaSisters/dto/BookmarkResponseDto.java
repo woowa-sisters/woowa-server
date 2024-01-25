@@ -1,3 +1,4 @@
+/*
 package com.woowaSisters.woowaSisters.dto;
 
 import com.woowaSisters.woowaSisters.domain.bookmark.Bookmark;
@@ -11,3 +12,4 @@ public class BookmarkResponseDto {
         this.parkName = entity.getParks().getParkName();
     }
 }
+*/

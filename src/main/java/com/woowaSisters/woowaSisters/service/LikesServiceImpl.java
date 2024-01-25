@@ -1,3 +1,4 @@
+/*
 package com.woowaSisters.woowaSisters.service;
 
 import com.woowaSisters.woowaSisters.domain.community.Community;
@@ -47,3 +48,4 @@ public class LikesServiceImpl implements LikesService {
 
     }
 }
+*/

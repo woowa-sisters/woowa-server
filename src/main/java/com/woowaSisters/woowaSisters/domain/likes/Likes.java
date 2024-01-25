@@ -1,3 +1,4 @@
+/*
 package com.woowaSisters.woowaSisters.domain.likes;
 
 import com.woowaSisters.woowaSisters.domain.community.Community;
@@ -43,3 +44,4 @@ public class Likes {
     }
 
 }
+*/

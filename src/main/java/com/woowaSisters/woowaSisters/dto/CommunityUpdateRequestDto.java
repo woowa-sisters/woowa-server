@@ -1,3 +1,4 @@
+/*
 package com.woowaSisters.woowaSisters.dto;
 
 import lombok.Builder;
@@ -14,3 +15,4 @@ public class CommunityUpdateRequestDto {
         this.article = article;
     }
 }
+*/
