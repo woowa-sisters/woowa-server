@@ -1,4 +1,3 @@
-/*
 package com.woowaSisters.woowaSisters.config;
 
 import org.springframework.context.annotation.Configuration;
@@ -15,4 +14,3 @@ public class WebConfig extends WebMvcConfigurerAdapter {
                 .allowCredentials(true);
     }
 }
-*/

@@ -1,4 +1,4 @@
-/*
+
 package com.woowaSisters.woowaSisters.domain.bookmark;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -13,4 +13,4 @@ public interface BookmarkRepository extends JpaRepository<Bookmark,UUID>{
     @Query("SELECT b FROM Bookmark b JOIN FETCH b.user WHERE b.user.userUuid = :userUuid ORDER BY b.parks.parkName DESC")
     List<Bookmark> findAllBookmark(@Param("userUuid") UUID Useruuid);
 }
-*/
+

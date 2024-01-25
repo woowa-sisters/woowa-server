@@ -1,4 +1,4 @@
-/*
+
 package com.woowaSisters.woowaSisters.domain.bookmark;
 import com.woowaSisters.woowaSisters.domain.user.User;
 import com.woowaSisters.woowaSisters.domain.park.Parks;
@@ -42,4 +42,3 @@ public class Bookmark {
         this.parks = parks;
     }
 }
-*/

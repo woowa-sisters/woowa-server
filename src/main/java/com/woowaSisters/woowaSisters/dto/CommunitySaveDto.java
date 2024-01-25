@@ -1,4 +1,3 @@
-/*
 package com.woowaSisters.woowaSisters.dto;
 
 import com.woowaSisters.woowaSisters.domain.community.Community;
@@ -35,4 +34,3 @@ public class CommunitySaveDto {
                 .build();
     }
 }
-*/

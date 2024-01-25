@@ -1,4 +1,4 @@
-/*
+
 package com.woowaSisters.woowaSisters.domain.community;
 
 
@@ -70,4 +70,3 @@ public class Community {
     }
 
 }
-*/

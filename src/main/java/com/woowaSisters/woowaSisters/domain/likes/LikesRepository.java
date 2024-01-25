@@ -1,4 +1,3 @@
-/*
 package com.woowaSisters.woowaSisters.domain.likes;
 
 import com.woowaSisters.woowaSisters.domain.community.Community;
@@ -16,4 +15,3 @@ public interface LikesRepository extends JpaRepository<Likes, UUID> {
     void deleteByUserAndCommunity(User user, Community community);
 
 }
-*/

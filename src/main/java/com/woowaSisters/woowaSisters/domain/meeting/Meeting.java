@@ -44,7 +44,7 @@ public class Meeting {
     private Integer meetingAttendees;
 
     @Column(name = "meeting_time")
-    private String meetingTime;
+    private long meetingTime;
 
     @Column(name = "meeting_location")
     private String meetingLocation;
@@ -92,7 +92,7 @@ public class Meeting {
     }
 
     @JsonProperty("meetingTime")
-    public String getMeetingTime() {
+    public long getMeetingTime() {
         return meetingTime;
     }
 
@@ -111,5 +111,8 @@ public class Meeting {
 
     public void setMaxAttendees(Integer maxAttendees) {
         this.maxAttendees = maxAttendees;
+    }
+    public void setMeetingTime(long meetingTime) {
+        this.meetingTime = meetingTime;
     }
 }

@@ -30,9 +30,10 @@ public class MeetingServiceImpl implements MeetingService {
             throw new IllegalArgumentException("모임 최소 인원수는 1명입니다");
         }
 
-        if (meeting.getMeetingTime() == null || meeting.getMeetingTime().isEmpty()) {
-            throw new IllegalArgumentException("모임 시간을 입력하세요");
+        if (meeting.getMeetingTime() == 0) {
+            throw new IllegalArgumentException("모임 시간은 필수 요소입니다");
         }
+
 
         if (meeting.getMeetingLocation() == null || meeting.getMeetingLocation().isEmpty()) {
             throw new IllegalArgumentException("모임 장소를 입력하세요");
@@ -52,9 +53,10 @@ public class MeetingServiceImpl implements MeetingService {
             throw new IllegalArgumentException("모임 최소 인원수는 1명입니다");
         }
 
-        if (meeting.getMeetingTime() == null || meeting.getMeetingTime().isEmpty()) {
-            throw new IllegalArgumentException("모임 시간은 필수 요소 입니다");
+        if (meeting.getMeetingTime() == 0) {
+            throw new IllegalArgumentException("모임 시간은 필수 요소입니다");
         }
+
 
         if (meeting.getMeetingLocation() == null || meeting.getMeetingLocation().isEmpty()) {
             throw new IllegalArgumentException("모임 장소는 필수 요소 입니다");
@@ -77,7 +79,6 @@ public class MeetingServiceImpl implements MeetingService {
         // 마감일이 7일 이내인 모임을 가져오도록 설정
         return meetingRepository.findClosingSoonMeetings(System.currentTimeMillis() + (7 * 24 * 60 * 60 * 1000));
     }
-
     @Override
     public List<Meeting> getAllLatestMeetings() {
         // 전체 최신 모임 목록 가져오기
@@ -86,10 +87,15 @@ public class MeetingServiceImpl implements MeetingService {
 
     @Override
     public List<Meeting> getAllClosingSoonMeetings() {
-        // 전체 마감임박한 모임 목록 가져오기
-        return meetingRepository.findAllClosingSoonMeetings(System.currentTimeMillis() + (7 * 24 * 60 * 60 * 1000));
+        return null;
     }
 
+    /*  @Override
+      public List<Meeting> getAllClosingSoonMeetings() {
+          // 전체 마감 임박한 모임 목록 가져오기
+          return meetingRepository.findAllClosingSoonMeetings(System.currentTimeMillis() + (7 * 24 * 60 * 60 * 1000));
+      }
+  */
     @Override
     public Optional<Meeting> getMeetingById(Long id) {
         // 특정 ID에 해당하는 모임 가져오기

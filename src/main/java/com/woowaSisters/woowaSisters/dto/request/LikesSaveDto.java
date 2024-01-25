@@ -1,4 +1,3 @@
-/*
 package com.woowaSisters.woowaSisters.dto.request;
 
 import com.woowaSisters.woowaSisters.domain.community.Community;
@@ -31,4 +30,3 @@ public class LikesSaveDto {
     }
 
 }
-*/

@@ -1,4 +1,4 @@
-/*
+
 package com.woowaSisters.woowaSisters.controller;
 
 import com.woowaSisters.woowaSisters.domain.user.UserRepository;
@@ -57,4 +57,3 @@ public class BookmarkController {
         bookmarkService.deleteBookmark(bookmarkUuid);
     }
 }
-*/

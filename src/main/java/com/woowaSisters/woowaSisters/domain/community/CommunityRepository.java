@@ -1,4 +1,4 @@
-/*
+
 package com.woowaSisters.woowaSisters.domain.community;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,4 +21,4 @@ public interface CommunityRepository extends JpaRepository<Community, UUID> {
     List<Community> findAllByParkNameWithFetchJoin(@Param("parkName") String parkName);
 
 }
-*/
+
