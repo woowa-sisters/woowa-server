@@ -54,12 +54,6 @@ public class MeetingController {
         return new ResponseEntity<>(latestMeetings, HttpStatus.OK);
     }
 
-    // 모임 리스트 보기 - 마감임박순 미리보기
-    @GetMapping("/closing-soon")
-    public ResponseEntity<List<Meeting>> getClosingSoonMeetings() {
-        List<Meeting> closingSoonMeetings = meetingService.getClosingSoonMeetings();
-        return new ResponseEntity<>(closingSoonMeetings, HttpStatus.OK);
-    }
 
     // 모임 리스트 보기 - 전체 최신순
     @GetMapping("/all-latest")
@@ -68,12 +62,22 @@ public class MeetingController {
         return new ResponseEntity<>(allLatestMeetings, HttpStatus.OK);
     }
 
+    // 모임 리스트 보기 - 마감임박순 미리보기
+    @GetMapping("/closing-soon")
+    public ResponseEntity<List<Meeting>> getMeetingTime() {
+        List<Meeting> closingSoonMeetings = meetingService.getMeetingTime();
+        return new ResponseEntity<>(closingSoonMeetings, HttpStatus.OK);
+    }
+
+
     // 모임 리스트 보기 - 전체 마감임박순
     @GetMapping("/all-closing-soon")
-    public ResponseEntity<List<Meeting>> getAllClosingSoonMeetings() {
-        List<Meeting> allClosingSoonMeetings = meetingService.getAllClosingSoonMeetings();
+    public ResponseEntity<List<Meeting>> getAllByMeetingTime() {
+        List<Meeting> allClosingSoonMeetings = meetingService.getAllByMeetingTime();
         return new ResponseEntity<>(allClosingSoonMeetings, HttpStatus.OK);
     }
+
+
 
     // 모임 상세보기
     @GetMapping("/{id}")

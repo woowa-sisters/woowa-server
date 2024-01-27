@@ -29,10 +29,12 @@ public class MeetingServiceImpl implements MeetingService {
         if (meeting.getMeetingAttendees() == null || meeting.getMeetingAttendees() <= 0) {
             throw new IllegalArgumentException("모임 최소 인원수는 1명입니다");
         }
+/*
 
         if (meeting.getMeetingTime() == 0) {
             throw new IllegalArgumentException("모임 시간은 필수 요소입니다");
         }
+*/
 
 
         if (meeting.getMeetingLocation() == null || meeting.getMeetingLocation().isEmpty()) {
@@ -53,9 +55,11 @@ public class MeetingServiceImpl implements MeetingService {
             throw new IllegalArgumentException("모임 최소 인원수는 1명입니다");
         }
 
+
         if (meeting.getMeetingTime() == 0) {
             throw new IllegalArgumentException("모임 시간은 필수 요소입니다");
         }
+
 
 
         if (meeting.getMeetingLocation() == null || meeting.getMeetingLocation().isEmpty()) {
@@ -74,28 +78,29 @@ public class MeetingServiceImpl implements MeetingService {
     }
 
     @Override
-    public List<Meeting> getClosingSoonMeetings() {
-        // 마감임박한 모임 목록 가져오기
-        // 마감일이 7일 이내인 모임을 가져오도록 설정
-        return meetingRepository.findClosingSoonMeetings(System.currentTimeMillis() + (7 * 24 * 60 * 60 * 1000));
-    }
-    @Override
     public List<Meeting> getAllLatestMeetings() {
         // 전체 최신 모임 목록 가져오기
         return meetingRepository.findAllByOrderByMeetingCreatedAtDesc();
     }
 
+
     @Override
-    public List<Meeting> getAllClosingSoonMeetings() {
-        return null;
+    public List<Meeting> getMeetingTime() {
+        // 마감임박한 모임 목록 가져오기
+        // 마감일이 7일 이내인 모임을 가져오도록 설정
+        return meetingRepository.findByMeetingTime(System.currentTimeMillis() + (7 * 24 * 60 * 60 * 1000));
     }
 
-    /*  @Override
-      public List<Meeting> getAllClosingSoonMeetings() {
+
+    @Override
+      public List<Meeting> getAllByMeetingTime() {
           // 전체 마감 임박한 모임 목록 가져오기
-          return meetingRepository.findAllClosingSoonMeetings(System.currentTimeMillis() + (7 * 24 * 60 * 60 * 1000));
+          return meetingRepository.findAllByMeetingTime(System.currentTimeMillis() + (7 * 24 * 60 * 60 * 1000));
       }
-  */
+
+
+
+
     @Override
     public Optional<Meeting> getMeetingById(Long id) {
         // 특정 ID에 해당하는 모임 가져오기
@@ -110,7 +115,7 @@ public class MeetingServiceImpl implements MeetingService {
         Optional<Meeting> meetingOptional = meetingRepository.findById(id);
         if (meetingOptional.isPresent()) {
             Meeting meeting = meetingOptional.get();
-            if (meeting.getMeetingAttendees() < meeting.getMaxAttendees()) {
+            if (meeting.getMeetingAttendees() < 10) {
                 meeting.setMeetingAttendees(meeting.getMeetingAttendees() + 1);
                 meetingRepository.save(meeting);
                 return true;

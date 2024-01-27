@@ -12,11 +12,14 @@ public interface MeetingService {
 
     List<Meeting> getLatestMeetings();
 
-    List<Meeting> getClosingSoonMeetings();
-
     List<Meeting> getAllLatestMeetings();
 
-    List<Meeting> getAllClosingSoonMeetings();
+
+    List<Meeting> getMeetingTime();
+
+
+    List<Meeting> getAllByMeetingTime();
+
 
     Optional<Meeting> getMeetingById(Long id);
 
