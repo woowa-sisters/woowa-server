@@ -24,7 +24,7 @@ import java.util.Properties;
         "com.woowaSisters.woowaSisters.domain.community",
         "com.woowaSisters.woowaSisters.domain.likes",
         "com.woowaSisters.woowaSisters.domain.test",
-        "com.woowaSisters.woowaSisters.domain.meeting"
+        "com.woowaSisters.woowaSisters.domain.subscribeMeeting"
 
 })
 public class JpaConfig {
@@ -53,7 +53,8 @@ public class JpaConfig {
                 "com.woowaSisters.woowaSisters.domain.bookmark",
                 "com.woowaSisters.woowaSisters.domain.community",
                 "com.woowaSisters.woowaSisters.domain.likes",
-                "com.woowaSisters.woowaSisters.domain.test"
+                "com.woowaSisters.woowaSisters.domain.test",
+                "com.woowaSisters.woowaSisters.domain.subscribeMeeting"
         );
 
         JpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();

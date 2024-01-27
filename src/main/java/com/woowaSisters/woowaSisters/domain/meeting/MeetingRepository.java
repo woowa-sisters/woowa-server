@@ -1,9 +1,11 @@
 package com.woowaSisters.woowaSisters.domain.meeting;
 
+import com.woowaSisters.woowaSisters.domain.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 public interface MeetingRepository extends JpaRepository<Meeting, Long> {
@@ -26,5 +28,6 @@ public interface MeetingRepository extends JpaRepository<Meeting, Long> {
     List<Meeting> findAllByMeetingTime(long meetingTime);
 
 
+    Meeting findByMeetingUuid(UUID meetingUuid);
 
 }

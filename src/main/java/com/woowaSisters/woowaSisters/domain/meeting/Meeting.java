@@ -24,7 +24,7 @@ public class Meeting {
     @Id
     //UUID를 자동으로 생성
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
+    @Column(name = "meeting_uuid")
     @Type(type = "uuid-char")
     private UUID meetingUuid;
 
