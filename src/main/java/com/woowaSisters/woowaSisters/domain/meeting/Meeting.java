@@ -1,9 +1,12 @@
 package com.woowaSisters.woowaSisters.domain.meeting;
 import lombok.*;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.annotations.Type;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import javax.persistence.*;
+import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -19,8 +22,10 @@ import org.hibernate.annotations.UpdateTimestamp;
 public class Meeting {
 
     @Id
+    //UUID를 자동으로 생성
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
+    @Type(type = "uuid-char")
     private UUID meetingUuid;
 
     @Column(name = "created_at")
@@ -56,7 +61,7 @@ public class Meeting {
         this.meetingTitle = meetingTitle;
     }
 
-    @JsonProperty("id")
+    @JsonProperty("uuid")
     public UUID getId() {
         return meetingUuid;
     }
@@ -91,12 +96,12 @@ public class Meeting {
         return meetingAttendees;
     }
 
-    @JsonProperty("meetingTime")
+    @JsonProperty("time")
     public long getMeetingTime() {
         return meetingTime;
     }
 
-    @JsonProperty("meetingLocation")
+    @JsonProperty("location")
     public String getMeetingLocation() {
         return meetingLocation;
     }
@@ -106,12 +111,6 @@ public class Meeting {
         return meetingContent;
     }
 
-    @Getter
-    private Integer maxAttendees;
-
-    public void setMaxAttendees(Integer maxAttendees) {
-        this.maxAttendees = maxAttendees;
-    }
     public void setMeetingTime(long meetingTime) {
         this.meetingTime = meetingTime;
     }
