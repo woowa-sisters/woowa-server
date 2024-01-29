@@ -2,12 +2,16 @@ package com.woowaSisters.woowaSisters.vo;
 
 import com.woowaSisters.woowaSisters.domain.comment.Comment;
 import com.woowaSisters.woowaSisters.domain.park.Parks;
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
+@AllArgsConstructor
+@Builder
+@Setter
+@Getter
 public class CommentVO {
     private UUID id;
     private LocalDateTime datetime;

@@ -47,11 +47,11 @@ public class Comment {
         this.description = description;
     }
 
-    @ManyToOne
+    /*@ManyToOne
     @JoinColumn(name = "user_uuid")
     private User user;
 
     @OneToOne
     @JoinColumn(name = "meeting_uuid")
-    private Meeting meeting;
+    private Meeting meeting;*/
 }
