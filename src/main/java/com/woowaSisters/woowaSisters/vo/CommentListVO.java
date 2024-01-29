@@ -4,20 +4,23 @@ import com.woowaSisters.woowaSisters.domain.comment.Comment;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 public class CommentListVO {
-    private Long id;
+    private UUID id;
     private LocalDateTime datetime = LocalDateTime.now();
-    private Long postId;
-    private Long userId;
-    private Long relationCm;
+    private UUID postId;
+    private UUID userId;
+    private UUID relationCm;
+    private String description;
 
     public CommentListVO(Comment entity){
-        this.id = id;
-        this.datetime = datetime;
-        this.postId = postId;
-        this.userId = userId;
-        this.relationCm = relationCm;
+        this.id = entity.getId();
+        this.datetime = entity.getDatetime();
+        this.postId = entity.getPostId();
+        this.userId = entity.getUserId();
+        this.relationCm = entity.getRelationCm();
+        this.description = entity.getDescription();
     }
 }

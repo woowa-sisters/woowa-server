@@ -1,6 +1,8 @@
 package com.woowaSisters.woowaSisters.service;
 
+import com.woowaSisters.woowaSisters.domain.comment.Comment;
 import com.woowaSisters.woowaSisters.domain.comment.CommentRepository;
+import com.woowaSisters.woowaSisters.dto.CommentSaveDTO;
 import com.woowaSisters.woowaSisters.vo.CommentListVO;
 import com.woowaSisters.woowaSisters.vo.CommunityListVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,5 +30,11 @@ public class CommentServiceImpl implements CommentService{
                 .map(CommentListVO::new)
                 .collect(Collectors.toList());
         return collect;
+    }
+
+    @Override
+    public Comment saveComment(CommentSaveDTO entity){
+        Comment comment = entity.toEntity();
+        return commentRepository.save(comment);
     }
 }
