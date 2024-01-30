@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
+@CrossOrigin(origins = "http://localhost:4000")
 @Lazy
 @RestController
 @RequestMapping("/api/subscriptions")
@@ -22,7 +23,7 @@ public class SubscribeMeetingController {
     }
 
     // 모임 구독
-    @PostMapping("/{id}")
+    @PostMapping("/")
     public ResponseEntity<String> subscribeToMeeting(@RequestParam UUID userUuid, @RequestParam UUID meetingUuid) {
         subscribeMeetingService.subscribeToMeeting(userUuid, meetingUuid);
         return ResponseEntity.status(HttpStatus.OK).body("모임 구독 성공");

@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@CrossOrigin(origins = "http://localhost:4000")
 @Lazy
 @RestController
 @RequestMapping("/api/meetings")
@@ -88,7 +89,7 @@ public class MeetingController {
     }
 
     // 모임 참여하기
-    @PostMapping("/{meeting-uuid}/member/{member-uuid}")
+    @PostMapping("/{meeting-uuid}/member/join/{member-uuid}")
     public ResponseEntity<String> joinMeeting(@PathVariable Long id) {
         boolean isJoined = meetingService.joinMeeting(id);
         if (isJoined) {
@@ -99,7 +100,7 @@ public class MeetingController {
     }
 
     // 모임 참여 취소
-    @PostMapping("/{meeting-uuid}/member/{member-uuid}")
+    @PostMapping("/{meeting-uuid}/member/leave/{member-uuid}")
     public ResponseEntity<String> leaveMeeting(@PathVariable Long id) {
         boolean isLeft = meetingService.leaveMeeting(id);
         if (isLeft) {
