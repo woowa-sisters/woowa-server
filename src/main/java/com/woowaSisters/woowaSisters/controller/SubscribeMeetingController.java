@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @Lazy
 @RestController
-@RequestMapping("/api/subscribe-meetings")
+@RequestMapping("/api/subscriptions")
 public class SubscribeMeetingController {
 
     private final SubscribeMeetingService subscribeMeetingService;
@@ -21,15 +21,17 @@ public class SubscribeMeetingController {
         this.subscribeMeetingService = subscribeMeetingService;
     }
 
-    @PostMapping("/subscribe")
+    // 모임 구독
+    @PostMapping("/{id}")
     public ResponseEntity<String> subscribeToMeeting(@RequestParam UUID userUuid, @RequestParam UUID meetingUuid) {
         subscribeMeetingService.subscribeToMeeting(userUuid, meetingUuid);
-        return ResponseEntity.status(HttpStatus.OK).body("Successfully subscribed to the meeting.");
+        return ResponseEntity.status(HttpStatus.OK).body("모임 구독 성공");
     }
 
-    @PostMapping("/cancel-subscription")
+    // 모임 구독 취소
+    @PostMapping("/{id}")
     public ResponseEntity<String> cancelSubscription(@RequestParam UUID userUuid, @RequestParam UUID meetingUuid) {
         subscribeMeetingService.cancelSubscription(userUuid, meetingUuid);
-        return ResponseEntity.status(HttpStatus.OK).body("Successfully canceled subscription to the meeting.");
+        return ResponseEntity.status(HttpStatus.OK).body("모임 구독 취소 성공");
     }
 }

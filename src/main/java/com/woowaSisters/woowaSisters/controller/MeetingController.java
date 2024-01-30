@@ -24,7 +24,7 @@ public class MeetingController {
     }
 
     // 모임 생성하기
-    @PostMapping("/create")
+    @PostMapping("/")
     public ResponseEntity<Meeting> createMeeting(@RequestBody Meeting meeting) {
         Meeting createdMeeting = meetingService.createMeeting(meeting);
         return new ResponseEntity<>(createdMeeting, HttpStatus.CREATED);
@@ -48,7 +48,7 @@ public class MeetingController {
     }
 
     // 모임 리스트 보기 - 최신순 미리보기
-    @GetMapping("/latest")
+    @GetMapping("/list?sort=latest&num=10")
     public ResponseEntity<List<Meeting>> getLatestMeetings() {
         List<Meeting> latestMeetings = meetingService.getLatestMeetings();
         return new ResponseEntity<>(latestMeetings, HttpStatus.OK);
@@ -56,14 +56,14 @@ public class MeetingController {
 
 
     // 모임 리스트 보기 - 전체 최신순
-    @GetMapping("/all-latest")
+    @GetMapping("/list?sort=latest")
     public ResponseEntity<List<Meeting>> getAllLatestMeetings() {
         List<Meeting> allLatestMeetings = meetingService.getAllLatestMeetings();
         return new ResponseEntity<>(allLatestMeetings, HttpStatus.OK);
     }
 
     // 모임 리스트 보기 - 마감임박순 미리보기
-    @GetMapping("/closing-soon")
+    @GetMapping("/list?sort=deadline&num=10")
     public ResponseEntity<List<Meeting>> getMeetingTime() {
         List<Meeting> closingSoonMeetings = meetingService.getMeetingTime();
         return new ResponseEntity<>(closingSoonMeetings, HttpStatus.OK);
@@ -71,7 +71,7 @@ public class MeetingController {
 
 
     // 모임 리스트 보기 - 전체 마감임박순
-    @GetMapping("/all-closing-soon")
+    @GetMapping("/list?sort=deadline")
     public ResponseEntity<List<Meeting>> getAllByMeetingTime() {
         List<Meeting> allClosingSoonMeetings = meetingService.getAllByMeetingTime();
         return new ResponseEntity<>(allClosingSoonMeetings, HttpStatus.OK);
@@ -88,7 +88,7 @@ public class MeetingController {
     }
 
     // 모임 참여하기
-    @PostMapping("/join/{id}")
+    @PostMapping("/{meeting-uuid}/member/{member-uuid}")
     public ResponseEntity<String> joinMeeting(@PathVariable Long id) {
         boolean isJoined = meetingService.joinMeeting(id);
         if (isJoined) {
@@ -99,7 +99,7 @@ public class MeetingController {
     }
 
     // 모임 참여 취소
-    @PostMapping("/leave/{id}")
+    @PostMapping("/{meeting-uuid}/member/{member-uuid}")
     public ResponseEntity<String> leaveMeeting(@PathVariable Long id) {
         boolean isLeft = meetingService.leaveMeeting(id);
         if (isLeft) {
