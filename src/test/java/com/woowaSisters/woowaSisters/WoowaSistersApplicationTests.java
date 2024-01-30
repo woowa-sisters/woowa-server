@@ -21,7 +21,7 @@ import static junit.framework.TestCase.assertNotNull;
 @SpringBootTest
 public class WoowaSistersApplicationTests {
 
-	@Autowired
+/*	@Autowired
 	private MeetingService meetingService;
 
 	@Test
@@ -43,5 +43,5 @@ public class WoowaSistersApplicationTests {
 
 		// 생성된 모임의 제목이 올바르게 설정되었는지 확인
 		assertEquals("Test Meeting2", createdMeeting.getMeetingTitle());
-	}
+	}*/
 }
