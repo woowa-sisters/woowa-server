@@ -1,4 +1,6 @@
 package com.woowaSisters.woowaSisters.domain.meeting;
+import com.woowaSisters.woowaSisters.domain.park.Parks;
+import com.woowaSisters.woowaSisters.domain.user.User;
 import lombok.*;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.Type;
@@ -36,8 +38,9 @@ public class Meeting {
     @UpdateTimestamp
     private java.sql.Timestamp meetingUpdatedAt;
 
-    @Column(name = "deleted_at")
-    private java.sql.Timestamp meetingDeletedAt;
+    @ManyToOne
+    @JoinColumn(name = "user_uuid")
+    private User user;
 
     @Column(name = "title")
     private String meetingTitle;
@@ -76,11 +79,6 @@ public class Meeting {
         return meetingUpdatedAt;
     }
 
-    @JsonProperty("deletedAt")
-    public java.sql.Timestamp getDeletedAt() {
-        return meetingDeletedAt;
-    }
-
     @JsonProperty("title")
     public String getTitle() {
         return meetingTitle;
@@ -114,4 +112,16 @@ public class Meeting {
     public void setMeetingTime(long meetingTime) {
         this.meetingTime = meetingTime;
     }
+
+    @Builder
+    public Meeting(String meetingTitle, User user ,Integer meetingAttendees,
+                   long meetingTime,String meetingLocation,String meetingContent) {
+        this.meetingTitle = meetingTitle;
+        this.user = user;
+        this.meetingAttendees = meetingAttendees;
+        this.meetingTime = meetingTime;
+        this.meetingLocation = meetingLocation;
+        this.meetingContent = meetingContent;
+    }
+
 }

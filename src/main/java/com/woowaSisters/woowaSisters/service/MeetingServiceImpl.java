@@ -1,6 +1,11 @@
 package com.woowaSisters.woowaSisters.service;
+import com.woowaSisters.woowaSisters.domain.community.Community;
 import com.woowaSisters.woowaSisters.domain.meeting.Meeting;
 import com.woowaSisters.woowaSisters.domain.meeting.MeetingRepository;
+import com.woowaSisters.woowaSisters.domain.park.Parks;
+import com.woowaSisters.woowaSisters.domain.user.User;
+import com.woowaSisters.woowaSisters.dto.CommunitySaveDto;
+import com.woowaSisters.woowaSisters.dto.MeetingRequestDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,33 +24,31 @@ public class MeetingServiceImpl implements MeetingService {
         this.meetingRepository = meetingRepository;
     }
 
+    // 모임 생성
     @Override
-    public Meeting createMeeting(Meeting meeting) {
-        // 모임 생성
-        // meeting 예외 처리
-        if (meeting.getTitle() == null || meeting.getTitle().isEmpty()) {
+    public Meeting createMeeting(User user, MeetingRequestDto meetingRequestDto){
+        // 예외 처리
+        if (meetingRequestDto.getMeetingTitle() == null || meetingRequestDto.getMeetingTitle().isEmpty()) {
             throw new IllegalArgumentException("모임 제목을 입력하세요");
         }
-        if (meeting.getMeetingAttendees() == null || meeting.getMeetingAttendees() <= 0) {
+        if (meetingRequestDto.getMeetingAttendees() == null || meetingRequestDto.getMeetingAttendees() <= 0) {
             throw new IllegalArgumentException("모임 최소 인원수는 1명입니다");
         }
-/*
-
-        if (meeting.getMeetingTime() == 0) {
+        if (meetingRequestDto.getMeetingTime() <= 0) {
             throw new IllegalArgumentException("모임 시간은 필수 요소입니다");
         }
-*/
-
-
-        if (meeting.getMeetingLocation() == null || meeting.getMeetingLocation().isEmpty()) {
+        if (meetingRequestDto.getMeetingLocation() == null || meetingRequestDto.getMeetingLocation().isEmpty()) {
             throw new IllegalArgumentException("모임 장소를 입력하세요");
         }
+        Meeting meeting = meetingRequestDto.toEntity(user);
 
         // 실제로 저장
         return meetingRepository.save(meeting);
+
     }
 
-    @Override
+
+ /*   @Override
     public Meeting updateMeeting(Meeting meeting) {
         // 모임 업데이트
         if (meeting.getTitle() == null || meeting.getTitle().isEmpty()) {
@@ -54,22 +57,16 @@ public class MeetingServiceImpl implements MeetingService {
         if (meeting.getMeetingAttendees() == null || meeting.getMeetingAttendees() <= 0) {
             throw new IllegalArgumentException("모임 최소 인원수는 1명입니다");
         }
-
-
         if (meeting.getMeetingTime() == 0) {
             throw new IllegalArgumentException("모임 시간은 필수 요소입니다");
         }
-
-
-
         if (meeting.getMeetingLocation() == null || meeting.getMeetingLocation().isEmpty()) {
             throw new IllegalArgumentException("모임 장소는 필수 요소 입니다");
         }
-
         // 실제로 저장
         return meetingRepository.save(meeting);
     }
-
+*/
     @Override
     public List<Meeting> getLatestMeetings() {
         // 최신 모임 목록 가져오기
@@ -97,8 +94,6 @@ public class MeetingServiceImpl implements MeetingService {
           // 전체 마감 임박한 모임 목록 가져오기
           return meetingRepository.findAllByMeetingTime(System.currentTimeMillis() + (7 * 24 * 60 * 60 * 1000));
       }
-
-
 
 
     @Override
