@@ -7,9 +7,8 @@ import org.hibernate.annotations.Type;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import javax.persistence.*;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -59,10 +58,6 @@ public class Meeting {
 
     @Column(name = "content", columnDefinition = "LONGTEXT")
     private String meetingContent;
-
-    public void setMeetingTitle(String meetingTitle) {
-        this.meetingTitle = meetingTitle;
-    }
 
     @JsonProperty("uuid")
     public UUID getId() {
@@ -123,5 +118,25 @@ public class Meeting {
         this.meetingLocation = meetingLocation;
         this.meetingContent = meetingContent;
     }
+    @ManyToMany
+    @JoinTable(
+            name = "meeting_members",
+            joinColumns = @JoinColumn(name = "meeting_uuid"),
+            inverseJoinColumns = @JoinColumn(name = "user_uuid")
+    )
+    private Set<User> members = new HashSet<>();
+
+    public boolean isFull() {
+        return members.size() >= meetingAttendees;
+    }
+
+    @Getter
+    @ManyToMany
+    @JoinTable(
+            name = "meeting_subscribers",
+            joinColumns = @JoinColumn(name = "meeting_uuid"),
+            inverseJoinColumns = @JoinColumn(name = "user_uuid")
+    )
+    private Set<User> subscribers = new HashSet<>();
 
 }
