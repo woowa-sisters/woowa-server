@@ -20,16 +20,6 @@ public interface MeetingRepository extends JpaRepository<Meeting, UUID> {
 
     Optional<Meeting> findById(UUID meetingUuid);
 
-/*    List<Meeting> findTop10ByOrderByMeetingCreatedAtDesc();
-
-    List<Meeting> findAllByOrderByMeetingCreatedAtDesc();
-
-
-    List<Meeting> findByMeetingTime(long meetingTime);
-
-
-    List<Meeting> findAllByMeetingTime(long meetingTime);*/
-
     List<Meeting> findTop10ByOrderByMeetingCreatedAtDesc();// 최근 10개의 최신 모임 목록
     List<Meeting> findAllByOrderByMeetingCreatedAtDesc(); // 전체 최신 모임 목록
 

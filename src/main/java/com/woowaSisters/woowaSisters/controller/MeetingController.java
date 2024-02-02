@@ -55,37 +55,6 @@ public class MeetingController {
         return ResponseEntity.ok(updatedMeeting);
     }
 
-/*
-    // 모임 리스트 보기 - 최신순 미리보기
-    @GetMapping("/list?sort=latest&num=10")
-    public ResponseEntity<List<Meeting>> getLatestMeetings() {
-        List<Meeting> latestMeetings = meetingService.getLatestMeetings();
-        return new ResponseEntity<>(latestMeetings, HttpStatus.OK);
-    }
-
-
-    // 모임 리스트 보기 - 전체 최신순
-    @GetMapping("/list?sort=latest")
-    public ResponseEntity<List<Meeting>> getAllLatestMeetings() {
-        List<Meeting> allLatestMeetings = meetingService.getAllLatestMeetings();
-        return new ResponseEntity<>(allLatestMeetings, HttpStatus.OK);
-    }
-
-    // 모임 리스트 보기 - 마감임박순 미리보기
-    @GetMapping("/list?sort=deadline&num=10")
-    public ResponseEntity<List<Meeting>> getMeetingTime() {
-        List<Meeting> closingSoonMeetings = meetingService.getMeetingTime();
-        return new ResponseEntity<>(closingSoonMeetings, HttpStatus.OK);
-    }
-
-
-    // 모임 리스트 보기 - 전체 마감임박순
-    @GetMapping("/list?sort=deadline")
-    public ResponseEntity<List<Meeting>> getAllByMeetingTime() {
-        List<Meeting> allClosingSoonMeetings = meetingService.getAllByMeetingTime();
-        return new ResponseEntity<>(allClosingSoonMeetings, HttpStatus.OK);
-    }*/
-
     @GetMapping("/list")
     public ResponseEntity<List<Meeting>> getMeetingList(@RequestParam(required = false, defaultValue = "latest") String sort) {
         MeetingListDto listDto = MeetingListDto.builder().sort(sort).build();

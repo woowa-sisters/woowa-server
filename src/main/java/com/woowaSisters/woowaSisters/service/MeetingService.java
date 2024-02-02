@@ -19,14 +19,6 @@ public interface MeetingService {
 
     List<Meeting> getMeetings(MeetingListDto listDto);
 
-/*    List<Meeting> getLatestMeetings();
-
-    List<Meeting> getAllLatestMeetings();
-
-    List<Meeting> getMeetingTime();
-
-    List<Meeting> getAllByMeetingTime();*/
-
     Optional<MeetingResponseDto> getMeetingDetailById(UUID id);
 
     boolean joinMeeting(MeetingJoinRequestDto requestDto);

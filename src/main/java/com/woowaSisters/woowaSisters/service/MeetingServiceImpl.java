@@ -100,36 +100,6 @@ public class MeetingServiceImpl implements MeetingService {
 
         return meetings;
     }
-/*
-
-    @Override
-    public List<Meeting> getLatestMeetings() {
-        // 최신 모임 목록 가져오기
-        // 가장 최근 10개의 모임을 가져오도록 설정
-        return meetingRepository.findTop10ByOrderByMeetingCreatedAtDesc();
-    }
-
-    @Override
-    public List<Meeting> getAllLatestMeetings() {
-        // 전체 최신 모임 목록 가져오기
-        return meetingRepository.findAllByOrderByMeetingCreatedAtDesc();
-    }
-
-
-    @Override
-    public List<Meeting> getMeetingTime() {
-        // 마감임박한 모임 목록 가져오기
-        // 마감일이 7일 이내인 모임을 가져오도록 설정
-        return meetingRepository.findByMeetingTime(System.currentTimeMillis() + (7 * 24 * 60 * 60 * 1000));
-    }
-
-
-    @Override
-      public List<Meeting> getAllByMeetingTime() {
-          // 전체 마감 임박한 모임 목록 가져오기
-          return meetingRepository.findAllByMeetingTime(System.currentTimeMillis() + (7 * 24 * 60 * 60 * 1000));
-      }
-*/
 
     //모임 상세 페이지 조회
     @Override
