@@ -13,11 +13,11 @@ import java.util.UUID;
 @Setter
 @Getter
 public class CommentVO {
-    private UUID id;
+    private Long id;
     private LocalDateTime datetime;
-    private UUID postId;
-    private UUID userId;
-    private UUID relationCm;
+    private Long postId;
+    private Long userId;
+    private Long relationCm;
     private String description;
 
     public CommentVO(Comment comment){

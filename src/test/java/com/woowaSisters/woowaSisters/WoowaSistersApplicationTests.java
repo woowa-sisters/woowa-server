@@ -5,14 +5,8 @@ import com.woowaSisters.woowaSisters.service.MeetingService;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.time.Instant;
-import java.time.LocalDateTime;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertNotNull;

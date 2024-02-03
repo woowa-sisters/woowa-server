@@ -17,7 +17,6 @@ import java.util.Properties;
 
 @Configuration
 @EnableJpaRepositories(basePackages = {
-        "com.woowaSisters.woowaSisters.domain.meeting",
         "com.woowaSisters.woowaSisters.domain.user",
         "com.woowaSisters.woowaSisters.domain.park",
         "com.woowaSisters.woowaSisters.domain.bookmark",

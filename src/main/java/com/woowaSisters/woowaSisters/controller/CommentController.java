@@ -1,12 +1,9 @@
 package com.woowaSisters.woowaSisters.controller;
 
 import com.woowaSisters.woowaSisters.domain.comment.Comment;
-import com.woowaSisters.woowaSisters.domain.park.ParkRepository;
-import com.woowaSisters.woowaSisters.domain.user.UserRepository;
+import com.woowaSisters.woowaSisters.dto.CommentListDTO;
 import com.woowaSisters.woowaSisters.dto.CommentSaveDTO;
 import com.woowaSisters.woowaSisters.service.CommentService;
-import com.woowaSisters.woowaSisters.service.CommunityService;
-import com.woowaSisters.woowaSisters.vo.CommentListVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.web.bind.annotation.*;
@@ -35,24 +32,12 @@ public class CommentController {
     }
 
     @GetMapping("/list")
-    public List<CommentListVO> getCommentList(){
+    public List<CommentListDTO> getCommentList(){
         return commentService.findAllDesc();
     }
 
-    @PostMapping("/{meetingUuid}")
-    public Comment saveComment(@PathVariable UUID userUuid,
-                               @RequestBody CommentSaveDTO comment){
+    @PostMapping("/save")
+    public Comment saveComment(@RequestBody CommentSaveDTO comment){
         return commentService.saveComment(comment);
     }
-
-
-    /*
-
-    //북마크 추가
-    @PostMapping("/bookmark/{parkUuid}")
-    public void SaveBookmark(@PathVariable UUID parkUuid,
-                             @RequestBody BookmarkSaveDto bookmarkSaveDto) {
-        bookmarkService.saveBookmark(bookmarkSaveDto.getUserUuid(), parkUuid);
-    }
-     */
 }

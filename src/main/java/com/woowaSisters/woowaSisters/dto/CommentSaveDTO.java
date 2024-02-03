@@ -1,24 +1,23 @@
 package com.woowaSisters.woowaSisters.dto;
 
-import com.woowaSisters.woowaSisters.controller.meeting.Meeting;
 import com.woowaSisters.woowaSisters.domain.comment.Comment;
-import com.woowaSisters.woowaSisters.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Getter
 @NoArgsConstructor
 public class CommentSaveDTO {
-    private UUID postId;
-    private UUID userId;
-    private UUID relationCm;
+    private Long postId;
+    private Long userId;
+    private Long relationCm;
     private String description;
 
     @Builder
-    public CommentSaveDTO(UUID postId, UUID userId, UUID relationCm, String description) {
+    public CommentSaveDTO(Long postId, Long userId, Long relationCm, String description) {
         this.postId = postId;
         this.userId = userId;
         this.relationCm = relationCm;
@@ -28,6 +27,7 @@ public class CommentSaveDTO {
     //dto -> entity
     public Comment toEntity() {
         return Comment.builder()
+                .datetime(LocalDateTime.now())
                 .postId(postId)
                 .userId(userId)
                 .relationCm(relationCm)

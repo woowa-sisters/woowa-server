@@ -2,9 +2,8 @@ package com.woowaSisters.woowaSisters.service;
 
 import com.woowaSisters.woowaSisters.domain.comment.Comment;
 import com.woowaSisters.woowaSisters.domain.comment.CommentRepository;
+import com.woowaSisters.woowaSisters.dto.CommentListDTO;
 import com.woowaSisters.woowaSisters.dto.CommentSaveDTO;
-import com.woowaSisters.woowaSisters.vo.CommentListVO;
-import com.woowaSisters.woowaSisters.vo.CommunityListVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -25,9 +24,9 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
-    public List<CommentListVO> findAllDesc(){
-        List<CommentListVO> collect = commentRepository.findAllDesc().stream()
-                .map(CommentListVO::new)
+    public List<CommentListDTO> findAllDesc(){
+        List<CommentListDTO> collect = commentRepository.findAllDesc().stream()
+                .map(CommentListDTO::new)
                 .collect(Collectors.toList());
         return collect;
     }

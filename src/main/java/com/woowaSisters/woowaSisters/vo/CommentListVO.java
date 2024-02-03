@@ -8,11 +8,11 @@ import java.util.UUID;
 
 @Data
 public class CommentListVO {
-    private UUID id;
+    private Long id;
     private LocalDateTime datetime = LocalDateTime.now();
-    private UUID postId;
-    private UUID userId;
-    private UUID relationCm;
+    private Long postId;
+    private Long userId;
+    private Long relationCm;
     private String description;
 
     public CommentListVO(Comment entity){
