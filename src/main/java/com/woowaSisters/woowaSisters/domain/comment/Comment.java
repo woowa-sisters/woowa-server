@@ -38,7 +38,7 @@ public class Comment {
     @Column(name="description")
     private String description;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+   /* @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id", referencedColumnName = "relationCm", insertable = false, updatable = false)
     private Comment parent;
 
