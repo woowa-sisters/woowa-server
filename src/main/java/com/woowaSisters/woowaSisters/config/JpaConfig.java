@@ -25,6 +25,7 @@ import java.util.Properties;
         "com.woowaSisters.woowaSisters.domain.test",
         "com.woowaSisters.woowaSisters.domain.meeting",
         "com.woowaSisters.woowaSisters.domain.comment"
+        "com.woowaSisters.woowaSisters.domain.subBook"
 })
 public class JpaConfig {
     @Bean
@@ -54,6 +55,7 @@ public class JpaConfig {
                 "com.woowaSisters.woowaSisters.domain.likes",
                 "com.woowaSisters.woowaSisters.domain.test",
                 "com.woowaSisters.woowaSisters.domain.comment"
+                "com.woowaSisters.woowaSisters.domain.subBook"
         );
 
         JpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
