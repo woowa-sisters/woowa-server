@@ -36,6 +36,8 @@ public class TestController {
     public TestController(TestService testService) {
         this.testService = testService;
     }
+
+
     // 회원가입
     @PostMapping("/user")
     public ResponseEntity<Test> join(@Valid @RequestBody TestRequestDto joinRequest, BindingResult bindingResult) {
