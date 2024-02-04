@@ -82,7 +82,6 @@ public class CommunityController {
     }
 
 
-
 //    //게시글 작성
 //    @PostMapping("/community/{parkUuid}/article")
 //    public UUID save(@PathVariable UUID parkUuid,

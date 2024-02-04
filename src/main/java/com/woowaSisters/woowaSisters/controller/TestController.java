@@ -61,6 +61,8 @@ public class TestController {
             Test newUser = testService.join(joinRequest);
 
             return ResponseEntity.ok(newUser);
+
+
         } catch (Exception e) {
             System.out.println("Register Error-------"+ e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();

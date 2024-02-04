@@ -26,6 +26,12 @@ public class Test {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "provider")
+    private String provider;
+
+    @Column(name = "providerId")
+    private String providerId;
+
     @JsonProperty("userId")
     public String getUserId() {
         return userId;
@@ -36,5 +42,10 @@ public class Test {
         return password;
     }
 
+
+    @JsonProperty("c")
+    public String getProvider() {
+        return provider;
+    }
 
 }
