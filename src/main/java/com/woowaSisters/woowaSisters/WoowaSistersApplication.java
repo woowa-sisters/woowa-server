@@ -13,6 +13,8 @@ import com.woowaSisters.woowaSisters.domain.subBook.SubBook;
 import com.woowaSisters.woowaSisters.domain.subBook.SubBookRepository;
 import com.woowaSisters.woowaSisters.domain.test.Test;
 import com.woowaSisters.woowaSisters.domain.test.TestRepository;
+import com.woowaSisters.woowaSisters.domain.token.JwtToken;
+import com.woowaSisters.woowaSisters.domain.token.JwtTokenRepository;
 import com.woowaSisters.woowaSisters.domain.user.UserRepository;
 import com.woowaSisters.woowaSisters.domain.park.Parks;
 import com.woowaSisters.woowaSisters.domain.user.User;
@@ -22,8 +24,8 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@EntityScan(basePackageClasses = {Parks.class, User.class, Meeting.class, Bookmark.class, Community.class, Test.class, Comment.class, Meeting.class, SubBook.class})
-@EnableJpaRepositories (basePackageClasses = {UserRepository.class, ParkRepository.class, MeetingRepository.class, BookmarkRepository.class, CommunityRepository.class, TestRepository.class, CommentRepository.class, MeetingRepository.class, SubBookRepository.class})
+@EntityScan(basePackageClasses = {Parks.class, User.class, Meeting.class, Bookmark.class, Community.class, Test.class, Comment.class, Meeting.class, SubBook.class, JwtToken.class})
+@EnableJpaRepositories (basePackageClasses = {UserRepository.class, ParkRepository.class, MeetingRepository.class, BookmarkRepository.class, CommunityRepository.class, TestRepository.class, CommentRepository.class, MeetingRepository.class, SubBookRepository.class, JwtTokenRepository.class})
 
 public class WoowaSistersApplication {
 
