@@ -13,6 +13,8 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 
     boolean existsByNickname(String nickname);
 
+    Optional<User> findByUsername(String username);
+
     Optional<User> findByUserId(String userId);
 
     User findByUserUuid(UUID userUuid);
@@ -20,6 +22,7 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     Optional<User> findByEmail(String email);
     boolean existsByEmail(String email);
 
+    Optional<User> findByLoginId(String loginId);
 
 
 }

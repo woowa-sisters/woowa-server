@@ -33,6 +33,18 @@ public class User {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "login_id")
+    private String loginId;
+
+    @Column(name="username")
+    private String username;
+
+    // 구글로그인
+    @Column(name = "provider")
+    private String provider;
+    @Column(name = "provider_id")
+    private String providerId;
+
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
