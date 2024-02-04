@@ -17,14 +17,14 @@ import java.util.Properties;
 
 @Configuration
 @EnableJpaRepositories(basePackages = {
-        "com.woowaSisters.woowaSisters.domain.meeting",
         "com.woowaSisters.woowaSisters.domain.user",
         "com.woowaSisters.woowaSisters.domain.park",
         "com.woowaSisters.woowaSisters.domain.bookmark",
         "com.woowaSisters.woowaSisters.domain.community",
         "com.woowaSisters.woowaSisters.domain.likes",
-        "com.woowaSisters.woowaSisters.domain.test"
-
+        "com.woowaSisters.woowaSisters.domain.test",
+        "com.woowaSisters.woowaSisters.domain.meeting",
+        "com.woowaSisters.woowaSisters.domain.comment"
 })
 public class JpaConfig {
     @Bean
@@ -52,7 +52,8 @@ public class JpaConfig {
                 "com.woowaSisters.woowaSisters.domain.bookmark",
                 "com.woowaSisters.woowaSisters.domain.community",
                 "com.woowaSisters.woowaSisters.domain.likes",
-                "com.woowaSisters.woowaSisters.domain.test"
+                "com.woowaSisters.woowaSisters.domain.test",
+                "com.woowaSisters.woowaSisters.domain.comment"
         );
 
         JpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();

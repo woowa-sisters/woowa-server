@@ -2,6 +2,8 @@ package com.woowaSisters.woowaSisters;
 
 import com.woowaSisters.woowaSisters.domain.bookmark.Bookmark;
 import com.woowaSisters.woowaSisters.domain.bookmark.BookmarkRepository;
+import com.woowaSisters.woowaSisters.domain.comment.Comment;
+import com.woowaSisters.woowaSisters.domain.comment.CommentRepository;
 import com.woowaSisters.woowaSisters.domain.community.Community;
 import com.woowaSisters.woowaSisters.domain.community.CommunityRepository;
 import com.woowaSisters.woowaSisters.domain.meeting.Meeting;
@@ -20,8 +22,8 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@EntityScan(basePackageClasses = {Parks.class, User.class, Meeting.class, Bookmark.class, Community.class, Test.class})
-@EnableJpaRepositories (basePackageClasses = {UserRepository.class, ParkRepository.class, MeetingRepository.class, BookmarkRepository.class, CommunityRepository.class, TestRepository.class})
+@EntityScan(basePackageClasses = {Parks.class, User.class, Meeting.class, Bookmark.class, Community.class, Test.class, Comment.class, Meeting.class})
+@EnableJpaRepositories (basePackageClasses = {UserRepository.class, ParkRepository.class, MeetingRepository.class, BookmarkRepository.class, CommunityRepository.class, TestRepository.class, CommentRepository.class, MeetingRepository.class})
 
 public class WoowaSistersApplication {
 
