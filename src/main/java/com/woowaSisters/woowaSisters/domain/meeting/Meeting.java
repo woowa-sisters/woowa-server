@@ -1,5 +1,4 @@
 package com.woowaSisters.woowaSisters.domain.meeting;
-import com.woowaSisters.woowaSisters.domain.park.Parks;
 import com.woowaSisters.woowaSisters.domain.user.User;
 import lombok.*;
 import com.fasterxml.jackson.annotation.JsonProperty;
