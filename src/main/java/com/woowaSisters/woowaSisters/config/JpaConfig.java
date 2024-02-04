@@ -25,7 +25,6 @@ import java.util.Properties;
         "com.woowaSisters.woowaSisters.domain.test",
         "com.woowaSisters.woowaSisters.domain.meeting",
         "com.woowaSisters.woowaSisters.domain.comment"
-
 })
 public class JpaConfig {
     @Bean

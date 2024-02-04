@@ -2,9 +2,12 @@ package com.woowaSisters.woowaSisters.domain.user;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 //import jakarta.persistence.*;
+import com.woowaSisters.woowaSisters.domain.meeting.Meeting;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 
@@ -33,6 +36,18 @@ public class User {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "login_id")
+    private String loginId;
+
+    @Column(name="username")
+    private String username;
+
+    // 구글로그인
+    @Column(name = "provider")
+    private String provider;
+    @Column(name = "provider_id")
+    private String providerId;
+
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
@@ -60,6 +75,9 @@ public class User {
     public String getPassword() {
         return password;
     }
+
+    @ManyToMany(mappedBy = "subscribers")
+    private Set<Meeting> subscribedMeetings = new HashSet<>();
 
 
 }

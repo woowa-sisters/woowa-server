@@ -9,6 +9,8 @@ import com.woowaSisters.woowaSisters.domain.community.CommunityRepository;
 import com.woowaSisters.woowaSisters.domain.meeting.Meeting;
 import com.woowaSisters.woowaSisters.domain.meeting.MeetingRepository;
 import com.woowaSisters.woowaSisters.domain.park.ParkRepository;
+/*import com.woowaSisters.woowaSisters.domain.subscribeMeeting.SubscribeMeeting;
+import com.woowaSisters.woowaSisters.domain.subscribeMeeting.SubscribeMeetingRepository;*/
 import com.woowaSisters.woowaSisters.domain.test.Test;
 import com.woowaSisters.woowaSisters.domain.test.TestRepository;
 import com.woowaSisters.woowaSisters.domain.user.UserRepository;

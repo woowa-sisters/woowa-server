@@ -1,10 +1,14 @@
 package com.woowaSisters.woowaSisters.domain.meeting;
+import com.woowaSisters.woowaSisters.domain.park.Parks;
+import com.woowaSisters.woowaSisters.domain.user.User;
 import lombok.*;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.annotations.Type;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import javax.persistence.*;
-import java.util.UUID;
+import java.util.*;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -19,8 +23,10 @@ import org.hibernate.annotations.UpdateTimestamp;
 public class Meeting {
 
     @Id
+    //UUID를 자동으로 생성
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
+    @Column(name = "meeting_uuid")
+    @Type(type = "uuid-char")
     private UUID meetingUuid;
 
     @Column(name = "created_at")
@@ -31,8 +37,9 @@ public class Meeting {
     @UpdateTimestamp
     private java.sql.Timestamp meetingUpdatedAt;
 
-    @Column(name = "deleted_at")
-    private java.sql.Timestamp meetingDeletedAt;
+    @ManyToOne
+    @JoinColumn(name = "user_uuid")
+    private User user;
 
     @Column(name = "title")
     private String meetingTitle;
@@ -52,11 +59,7 @@ public class Meeting {
     @Column(name = "content", columnDefinition = "LONGTEXT")
     private String meetingContent;
 
-    public void setMeetingTitle(String meetingTitle) {
-        this.meetingTitle = meetingTitle;
-    }
-
-    @JsonProperty("id")
+    @JsonProperty("uuid")
     public UUID getId() {
         return meetingUuid;
     }
@@ -69,11 +72,6 @@ public class Meeting {
     @JsonProperty("updatedAt")
     public java.sql.Timestamp getUpdatedAt() {
         return meetingUpdatedAt;
-    }
-
-    @JsonProperty("deletedAt")
-    public java.sql.Timestamp getDeletedAt() {
-        return meetingDeletedAt;
     }
 
     @JsonProperty("title")
@@ -91,12 +89,12 @@ public class Meeting {
         return meetingAttendees;
     }
 
-    @JsonProperty("meetingTime")
+    @JsonProperty("time")
     public long getMeetingTime() {
         return meetingTime;
     }
 
-    @JsonProperty("meetingLocation")
+    @JsonProperty("location")
     public String getMeetingLocation() {
         return meetingLocation;
     }
@@ -106,13 +104,39 @@ public class Meeting {
         return meetingContent;
     }
 
-    @Getter
-    private Integer maxAttendees;
-
-    public void setMaxAttendees(Integer maxAttendees) {
-        this.maxAttendees = maxAttendees;
-    }
     public void setMeetingTime(long meetingTime) {
         this.meetingTime = meetingTime;
     }
+
+    @Builder
+    public Meeting(String meetingTitle, User user ,Integer meetingAttendees,
+                   long meetingTime,String meetingLocation,String meetingContent) {
+        this.meetingTitle = meetingTitle;
+        this.user = user;
+        this.meetingAttendees = meetingAttendees;
+        this.meetingTime = meetingTime;
+        this.meetingLocation = meetingLocation;
+        this.meetingContent = meetingContent;
+    }
+    @ManyToMany
+    @JoinTable(
+            name = "meeting_members",
+            joinColumns = @JoinColumn(name = "meeting_uuid"),
+            inverseJoinColumns = @JoinColumn(name = "user_uuid")
+    )
+    private Set<User> members = new HashSet<>();
+
+    public boolean isFull() {
+        return members.size() >= meetingAttendees;
+    }
+
+    @Getter
+    @ManyToMany
+    @JoinTable(
+            name = "meeting_subscribers",
+            joinColumns = @JoinColumn(name = "meeting_uuid"),
+            inverseJoinColumns = @JoinColumn(name = "user_uuid")
+    )
+    private Set<User> subscribers = new HashSet<>();
+
 }

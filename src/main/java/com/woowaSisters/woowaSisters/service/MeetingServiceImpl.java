@@ -1,137 +1,225 @@
 package com.woowaSisters.woowaSisters.service;
 import com.woowaSisters.woowaSisters.domain.meeting.Meeting;
 import com.woowaSisters.woowaSisters.domain.meeting.MeetingRepository;
+import com.woowaSisters.woowaSisters.domain.user.User;
+import com.woowaSisters.woowaSisters.domain.user.UserRepository;
+import com.woowaSisters.woowaSisters.dto.meeting.MeetingJoinRequestDto;
+import com.woowaSisters.woowaSisters.dto.meeting.MeetingListDto;
+import com.woowaSisters.woowaSisters.dto.meeting.MeetingSaveDto;
+import com.woowaSisters.woowaSisters.dto.meeting.MeetingResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
+import javax.persistence.EntityNotFoundException;
+import java.util.*;
 
 @Service
 @Transactional
 public class MeetingServiceImpl implements MeetingService {
 
     private final MeetingRepository meetingRepository;
+    private final UserRepository userRepository;
+
 
     @Autowired
-    public MeetingServiceImpl(MeetingRepository meetingRepository) {
+    public MeetingServiceImpl(MeetingRepository meetingRepository, UserRepository userRepository) {
         this.meetingRepository = meetingRepository;
+        this.userRepository = userRepository;
     }
 
+    // 모임 생성
     @Override
-    public Meeting createMeeting(Meeting meeting) {
-        // 모임 생성
-        // meeting 예외 처리
-        if (meeting.getTitle() == null || meeting.getTitle().isEmpty()) {
+    public Meeting createMeeting(User user, MeetingSaveDto meetingSaveDto){
+        // 예외 처리
+        if (meetingSaveDto.getMeetingTitle() == null || meetingSaveDto.getMeetingTitle().isEmpty()) {
             throw new IllegalArgumentException("모임 제목을 입력하세요");
         }
-        if (meeting.getMeetingAttendees() == null || meeting.getMeetingAttendees() <= 0) {
+        if (meetingSaveDto.getMeetingAttendees() == null || meetingSaveDto.getMeetingAttendees() <= 0) {
             throw new IllegalArgumentException("모임 최소 인원수는 1명입니다");
         }
-
-        if (meeting.getMeetingTime() == 0) {
+        if (meetingSaveDto.getMeetingTime() <= 0) {
             throw new IllegalArgumentException("모임 시간은 필수 요소입니다");
         }
-
-
-        if (meeting.getMeetingLocation() == null || meeting.getMeetingLocation().isEmpty()) {
+        if (meetingSaveDto.getMeetingLocation() == null || meetingSaveDto.getMeetingLocation().isEmpty()) {
             throw new IllegalArgumentException("모임 장소를 입력하세요");
         }
+        Meeting meeting = meetingSaveDto.toEntity(user);
 
         // 실제로 저장
         return meetingRepository.save(meeting);
+
     }
 
+
     @Override
-    public Meeting updateMeeting(Meeting meeting) {
-        // 모임 업데이트
-        if (meeting.getTitle() == null || meeting.getTitle().isEmpty()) {
-            throw new IllegalArgumentException("모임 제목은 필수 요소 입니다");
+    public Meeting updateMeeting(UUID meetingUuid, MeetingResponseDto updateDto) {
+        Meeting existingMeeting = meetingRepository.findById(meetingUuid)
+                .orElseThrow(() -> new EntityNotFoundException("모임을 찾을 수 없습니다"));
+
+        // 업데이트에 필요한 값만 변경
+        if (updateDto.getMeetingTitle() != null && !updateDto.getMeetingTitle().isEmpty()) {
+            existingMeeting.setMeetingTitle(updateDto.getMeetingTitle());
         }
-        if (meeting.getMeetingAttendees() == null || meeting.getMeetingAttendees() <= 0) {
-            throw new IllegalArgumentException("모임 최소 인원수는 1명입니다");
+        if (updateDto.getMeetingAttendees() != null && updateDto.getMeetingAttendees() > 0) {
+            existingMeeting.setMeetingAttendees(updateDto.getMeetingAttendees());
+        }
+        if (updateDto.getMeetingTime() > 0) {
+            existingMeeting.setMeetingTime(updateDto.getMeetingTime());
+        }
+        if (updateDto.getMeetingLocation() != null && !updateDto.getMeetingLocation().isEmpty()) {
+            existingMeeting.setMeetingLocation(updateDto.getMeetingLocation());
+        }
+        if (updateDto.getMeetingContent() != null) {
+            existingMeeting.setMeetingContent(updateDto.getMeetingContent());
         }
 
-        if (meeting.getMeetingTime() == 0) {
-            throw new IllegalArgumentException("모임 시간은 필수 요소입니다");
+        // 저장된 모임 업데이트
+        return meetingRepository.save(existingMeeting);
+    }
+
+    public List<Meeting> getMeetings(MeetingListDto listDto) {
+        List<Meeting> meetings;
+
+        switch (listDto.getSort()) {
+            case "latest":
+                meetings = meetingRepository.findTop10ByOrderByMeetingCreatedAtDesc();
+                break;
+            case "all-latest":
+                meetings = meetingRepository.findAllByOrderByMeetingCreatedAtDesc();
+                break;
+            case "upcoming-top10":
+                meetings = meetingRepository.findUpcomingMeetingsTop10();
+                break;
+            case "all-upcoming":
+                meetings = meetingRepository.findAllUpcomingMeetings();
+                break;
+            default:
+                throw new IllegalArgumentException("유효하지 않은 정렬 옵션입니다.");
         }
 
-
-        if (meeting.getMeetingLocation() == null || meeting.getMeetingLocation().isEmpty()) {
-            throw new IllegalArgumentException("모임 장소는 필수 요소 입니다");
-        }
-
-        // 실제로 저장
-        return meetingRepository.save(meeting);
+        return meetings;
     }
 
+    //모임 상세 페이지 조회
     @Override
-    public List<Meeting> getLatestMeetings() {
-        // 최신 모임 목록 가져오기
-        // 가장 최근 10개의 모임을 가져오도록 설정
-        return meetingRepository.findTop10ByOrderByMeetingCreatedAtDesc();
-    }
-
-    @Override
-    public List<Meeting> getClosingSoonMeetings() {
-        // 마감임박한 모임 목록 가져오기
-        // 마감일이 7일 이내인 모임을 가져오도록 설정
-        return meetingRepository.findClosingSoonMeetings(System.currentTimeMillis() + (7 * 24 * 60 * 60 * 1000));
-    }
-    @Override
-    public List<Meeting> getAllLatestMeetings() {
-        // 전체 최신 모임 목록 가져오기
-        return meetingRepository.findAllByOrderByMeetingCreatedAtDesc();
-    }
-
-    @Override
-    public List<Meeting> getAllClosingSoonMeetings() {
-        return null;
-    }
-
-    /*  @Override
-      public List<Meeting> getAllClosingSoonMeetings() {
-          // 전체 마감 임박한 모임 목록 가져오기
-          return meetingRepository.findAllClosingSoonMeetings(System.currentTimeMillis() + (7 * 24 * 60 * 60 * 1000));
-      }
-  */
-    @Override
-    public Optional<Meeting> getMeetingById(Long id) {
-        // 특정 ID에 해당하는 모임 가져오기
-        return meetingRepository.findById(id);
-    }
-
-    @Override
-    public boolean joinMeeting(Long id) {
-        // 모임 참여
-        //모임에 참여 조건을 확인하고 참여가 가능하면 true 반환
-        //참여 인원이 꽉 차지 않았으면 참여 가능
+    public Optional<MeetingResponseDto> getMeetingDetailById(UUID id) {
         Optional<Meeting> meetingOptional = meetingRepository.findById(id);
-        if (meetingOptional.isPresent()) {
+        return meetingOptional.map(this::mapToMeetingResponseDto);
+    }
+
+    private MeetingResponseDto mapToMeetingResponseDto(Meeting meeting) {
+        return MeetingResponseDto.builder()
+                .meetingUuid(meeting.getMeetingUuid())
+                .meetingTitle(meeting.getMeetingTitle())
+                .meetingAttendees(meeting.getMeetingAttendees())
+                .meetingTime(meeting.getMeetingTime())
+                .meetingLocation(meeting.getMeetingLocation())
+                .meetingContent(meeting.getMeetingContent())
+                .build();
+    }
+
+    //모임 참여
+    @Override
+    public boolean joinMeeting(MeetingJoinRequestDto requestDto) {
+        UUID meetingUuid = requestDto.getMeetingUuid();
+        UUID userUuid = requestDto.getUserUuid();
+
+        // 해당 모임과 사용자를 검색
+        Optional<Meeting> meetingOptional = meetingRepository.findById(meetingUuid);
+        Optional<User> userOptional = userRepository.findById(userUuid);
+
+        if (meetingOptional.isPresent() && userOptional.isPresent()) {
             Meeting meeting = meetingOptional.get();
-            if (meeting.getMeetingAttendees() < meeting.getMaxAttendees()) {
-                meeting.setMeetingAttendees(meeting.getMeetingAttendees() + 1);
+            User user = userOptional.get();
+
+            // 참여 가능한지 확인
+            if (!meeting.isFull()) {
+                // 모임에 참여한 멤버 목록에 추가
+                meeting.getMembers().add(user);
                 meetingRepository.save(meeting);
-                return true;
+                return true; // 성공적으로 참여
+            } else {
+                return false; // 모임이 가득 참
             }
         }
-        return false;
+
+        return false; // 모임 또는 사용자를 찾을 수 없음
     }
 
+    //모임 참여 취소
     @Override
-    public boolean leaveMeeting(Long id) {
-        // 모임 참여 취소
-        //이미 참여한 모임에 대해서만 취소 가능하도록 설정
-        Optional<Meeting> meetingOptional = meetingRepository.findById(id);
-        if (meetingOptional.isPresent()) {
+    public boolean cancelJoinMeeting(MeetingJoinRequestDto requestDto) {
+        UUID meetingUuid = requestDto.getMeetingUuid();
+        UUID userUuid = requestDto.getUserUuid();
+
+        // 해당 모임과 사용자를 검색
+        Optional<Meeting> meetingOptional = meetingRepository.findById(meetingUuid);
+        Optional<User> userOptional = userRepository.findById(userUuid);
+
+        if (meetingOptional.isPresent() && userOptional.isPresent()) {
             Meeting meeting = meetingOptional.get();
-            if (meeting.getMeetingAttendees() > 0) {
-                meeting.setMeetingAttendees(meeting.getMeetingAttendees() - 1);
+            User user = userOptional.get();
+
+            // 참여 여부 확인 후 취소
+            if (meeting.getMembers().contains(user)) {
+                meeting.getMembers().remove(user);
                 meetingRepository.save(meeting);
-                return true;
+                return true; // 성공적으로 참여 취소
+            } else {
+                return false; // 사용자가 해당 모임에 참여하지 않음
             }
         }
-        return false;
+
+        return false; // 모임 또는 사용자를 찾을 수 없음
+    }
+
+    //모임 구독
+    public boolean subscribeToMeeting(UUID meetingUuid, UUID userUuid) {
+        Optional<Meeting> meetingOptional = meetingRepository.findById(meetingUuid);
+        Optional<User> userOptional = userRepository.findById(userUuid);
+
+        if (meetingOptional.isPresent() && userOptional.isPresent()) {
+            Meeting meeting = meetingOptional.get();
+            User user = userOptional.get();
+
+            if (!meeting.getSubscribers().contains(user)) {
+                meeting.getSubscribers().add(user);
+                meetingRepository.save(meeting);
+                return true; // 성공적으로 구독
+            }
+        }
+
+        return false; // 모임 또는 사용자를 찾을 수 없거나 이미 구독 중
+    }
+
+    // 모임 구독 취소
+    public boolean unsubscribeFromMeeting(UUID meetingUuid, UUID userUuid) {
+        Optional<Meeting> meetingOptional = meetingRepository.findById(meetingUuid);
+        Optional<User> userOptional = userRepository.findById(userUuid);
+
+        if (meetingOptional.isPresent() && userOptional.isPresent()) {
+            Meeting meeting = meetingOptional.get();
+            User user = userOptional.get();
+
+            if (meeting.getSubscribers().contains(user)) {
+                meeting.getSubscribers().remove(user);
+                meetingRepository.save(meeting);
+                return true; // 성공적으로 구독 취소
+            }
+        }
+
+        return false; // 모임 또는 사용자를 찾을 수 없거나 구독 중이 아님
+    }
+
+    public Set<Meeting> getSubscribedMeetings(UUID userUuid) {
+        Optional<User> userOptional = userRepository.findById(userUuid);
+
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            return user.getSubscribedMeetings();
+        }
+
+        return Collections.emptySet(); // 사용자를 찾을 수 없을 경우 빈 Set 반환
     }
 }
