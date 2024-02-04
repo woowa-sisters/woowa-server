@@ -1,3 +1,4 @@
+
 package com.woowaSisters.woowaSisters.vo;
 
 import com.woowaSisters.woowaSisters.domain.community.Community;
