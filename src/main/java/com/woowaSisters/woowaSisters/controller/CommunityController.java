@@ -1,3 +1,4 @@
+
 package com.woowaSisters.woowaSisters.controller;
 
 import com.woowaSisters.woowaSisters.domain.park.ParkRepository;
@@ -104,10 +105,5 @@ public class CommunityController {
 //        return communityService.deleteCommuity(communityUuid);
 //    }
 
-
-
-
-
-
-
 }
+

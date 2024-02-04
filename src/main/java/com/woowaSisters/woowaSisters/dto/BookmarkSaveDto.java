@@ -1,3 +1,4 @@
+
 package com.woowaSisters.woowaSisters.dto;
 
 import com.woowaSisters.woowaSisters.domain.bookmark.Bookmark;

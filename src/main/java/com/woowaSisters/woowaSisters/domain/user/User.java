@@ -2,9 +2,12 @@ package com.woowaSisters.woowaSisters.domain.user;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 //import jakarta.persistence.*;
+import com.woowaSisters.woowaSisters.domain.meeting.Meeting;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 
@@ -72,6 +75,9 @@ public class User {
     public String getPassword() {
         return password;
     }
+
+    @ManyToMany(mappedBy = "subscribers")
+    private Set<Meeting> subscribedMeetings = new HashSet<>();
 
 
 }
