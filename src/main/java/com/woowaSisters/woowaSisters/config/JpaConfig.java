@@ -51,7 +51,6 @@ public class JpaConfig {
         LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactoryBean.setDataSource(dataSource);
         entityManagerFactoryBean.setPackagesToScan(
-          
                 "com.woowaSisters.woowaSisters.domain.user",
                 "com.woowaSisters.woowaSisters.domain.park",
                 "com.woowaSisters.woowaSisters.domain.bookmark",

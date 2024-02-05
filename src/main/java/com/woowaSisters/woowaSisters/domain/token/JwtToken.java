@@ -1,5 +1,6 @@
 package com.woowaSisters.woowaSisters.domain.token;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import javax.persistence.*;
 import java.util.UUID;
@@ -20,4 +21,7 @@ public class JwtToken {
 
     @Column(name = "token_value", nullable = false, unique = true, columnDefinition = "TEXT")
     private String tokenValue;
+
+    @JsonProperty("tokenValue")
+    public String getTokenValue() {return tokenValue;}
 }
