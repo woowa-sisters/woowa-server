@@ -4,7 +4,6 @@ import com.woowaSisters.woowaSisters.domain.comment.Comment;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Data
 @AllArgsConstructor

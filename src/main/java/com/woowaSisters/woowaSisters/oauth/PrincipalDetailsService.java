@@ -24,7 +24,8 @@ public class PrincipalDetailsService implements UserDetailsService {
         try {
             return new PrincipalDetails(userProvider.retrieveByEmail(email));
         } catch (BaseException e) {
-            throw new RuntimeException(e);
+            throw new UsernameNotFoundException("User not found with email: " + email, e);
         }
     }
+
 }
