@@ -1,24 +1,18 @@
 package com.woowaSisters.woowaSisters.config;
 
-import com.woowaSisters.woowaSisters.domain.user.UserRole;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 //import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 
 //import jakarta.annotation.PostConstruct;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.web.cors.CorsUtils;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
-// 구글 로그인 관련
-import com.woowaSisters.woowaSisters.service.PrincipalOauth2UserService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 //@RequiredArgsConstructor
 //@EnableWebSecurity
@@ -129,47 +123,30 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 //
 //
 //
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 //@EnableWebSecurity
 @Configuration
-@EnableWebSecurity
+@EnableWebSecurity(debug = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final PrincipalOauth2UserService principalOauth2UserService;
+
+    private final OAuth2UserService<OAuth2UserRequest, OAuth2User> principalOAuth2DetailsService;
+
+    public SecurityConfig(OAuth2UserService<OAuth2UserRequest, OAuth2User> principalOAuth2DetailsService) {
+        this.principalOAuth2DetailsService = principalOAuth2DetailsService;
+    }
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
-                .authorizeRequests()
-                // 인증
-                .antMatchers("/security-login/info").authenticated()
-                // 인가
-                .antMatchers("/security-login/admin/**").hasAuthority(UserRole.ADMIN.name())
-                .anyRequest().permitAll()
-                .and()
-                // Form Login 방식 적용
-                .formLogin()
-                // 로그인 할 때 사용할 파라미터들
-                .usernameParameter("loginId")
-                .passwordParameter("password")
-                .loginPage("/security-login/login")     // 로그인 페이지 URL
-                .defaultSuccessUrl("/security-login")   // 로그인 성공 시 이동할 URL
-                .failureUrl("/security-login/login")    // 로그인 실패 시 이동할 URL
-                .and()
-                .logout()
-                .logoutUrl("/security-login/logout")
-                .invalidateHttpSession(true).deleteCookies("JSESSIONID")
-                // OAuth 로그인
-                .and()
-                .oauth2Login()
-                .loginPage("/security-login/login")
-                .defaultSuccessUrl("/security-login")
-                .userInfoEndpoint()
-                .userService(principalOauth2UserService)
         ;
-//        http
-//                .exceptionHandling()
-//                .authenticationEntryPoint(new MyAuthenticationEntryPoint())
-//                .accessDeniedHandler(new MyAccessDeniedHandler());
+        http
+                .oauth2Login()
+//                .loginPage("/security-login/login")
+//                .defaultSuccessUrl("/security-login")
+                .userInfoEndpoint()
+                .userService(principalOAuth2DetailsService);
+
     }
 }
