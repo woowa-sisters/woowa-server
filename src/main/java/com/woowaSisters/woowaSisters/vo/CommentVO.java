@@ -1,7 +1,6 @@
 package com.woowaSisters.woowaSisters.vo;
 
 import com.woowaSisters.woowaSisters.domain.comment.Comment;
-import com.woowaSisters.woowaSisters.domain.park.Parks;
 import lombok.*;
 
 import java.time.LocalDateTime;
