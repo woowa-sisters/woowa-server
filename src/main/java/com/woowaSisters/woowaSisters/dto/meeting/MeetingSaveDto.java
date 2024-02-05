@@ -17,20 +17,21 @@ public class MeetingSaveDto {
     private long meetingTime;
     private String meetingLocation;
     private String meetingContent;
-/*
     private Long bookId;
     private UUID meetingUuid;
 
-*/
     @Builder
     public MeetingSaveDto(String meetingTitle, UUID userUuid, Integer meetingAttendees,
-                          long meetingTime, String meetingLocation, String meetingContent) {
+                          long meetingTime, String meetingLocation, String meetingContent,
+                          Long bookId, UUID meetingUuid) {
         this.meetingTitle = meetingTitle;
         this.userUuid = userUuid;
         this.meetingAttendees = meetingAttendees;
         this.meetingTime = meetingTime;
         this.meetingLocation = meetingLocation;
         this.meetingContent = meetingContent;
+        this.bookId = bookId;
+        this.meetingUuid = meetingUuid;
     }
 
     public Meeting toEntity(User user) {
@@ -41,6 +42,8 @@ public class MeetingSaveDto {
                 .meetingTime(meetingTime)
                 .meetingLocation(meetingLocation)
                 .meetingContent(meetingContent)
+                .bookId(bookId)
+                .meetingUuid(meetingUuid)
                 .build();
     }
 
