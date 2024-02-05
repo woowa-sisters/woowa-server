@@ -1,6 +1,9 @@
 package com.woowaSisters.woowaSisters.config;
 
 
+import com.woowaSisters.woowaSisters.service.oauth.PrincipalOAuth2DetailsService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 //import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -126,27 +129,47 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 //@RequiredArgsConstructor
 //@EnableWebSecurity
 @Configuration
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final PrincipalOAuth2DetailsService principalOAuth2DetailsService;
+    private final AuthService authService;
+    private final JwtTokenProvider jwtTokenProvider;
 
-    private final OAuth2UserService<OAuth2UserRequest, OAuth2User> principalOAuth2DetailsService;
 
-    public SecurityConfig(OAuth2UserService<OAuth2UserRequest, OAuth2User> principalOAuth2DetailsService) {
+    @Autowired
+    public SecurityConfig(PrincipalOAuth2DetailsService principalOAuth2DetailsService, AuthService authService, JwtTokenProvider jwtTokenProvider) {
         this.principalOAuth2DetailsService = principalOAuth2DetailsService;
+        this.authService = authService;
+        this.jwtTokenProvider = jwtTokenProvider;
     }
 
+    @Bean
+    @Override
+    protected AuthenticationManager authenticationManager() throws Exception {
+        return super.authenticationManager();
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
-        ;
-        http
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+
+                .and()
+
+                .exceptionHandling()
+                .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
+                .accessDeniedHandler(new CustomAccessDeniedHandler())
+
+                .and()
+
                 .oauth2Login()
-//                .loginPage("/security-login/login")
-//                .defaultSuccessUrl("/security-login")
                 .userInfoEndpoint()
-                .userService(principalOAuth2DetailsService);
+                .userService(principalOAuth2DetailsService)
+
+                .and()
+
+                .successHandler(new OAuth2SuccessHandler(jwtTokenProvider,authService));
 
     }
 }
