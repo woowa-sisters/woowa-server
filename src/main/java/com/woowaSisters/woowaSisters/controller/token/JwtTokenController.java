@@ -25,6 +25,31 @@ public class JwtTokenController {
         this.userService = userService;
     }
 
+//    @PostMapping("/save")
+//    public ResponseEntity<?> saveTokenAndUserInfo(@RequestBody TokenValueDTO tokenValueDTO) {
+//        // Save the token
+//        JwtToken jwtToken = jwtTokenService.saveToken(tokenValueDTO.getTokenValue());
+//        if (jwtToken == null) {
+//            return ResponseEntity.badRequest().body("Failed to save token");
+//        }
+//
+//        // Use the token to fetch user info from Google and save it
+//        try {
+//            Map<String, Object> userInfo = jwtTokenService.getUserInfo(tokenValueDTO.getTokenValue());
+//            if (userInfo == null || userInfo.isEmpty()) {
+//                return ResponseEntity.badRequest().body("Failed to fetch user info from Google");
+//            }
+//
+//            User savedUser = userService.saveGoogleUserInfo(userInfo);
+//            if (savedUser == null) {
+//                return ResponseEntity.internalServerError().body("Failed to save user info");
+//            }
+//
+//            return ResponseEntity.ok(savedUser);
+//        } catch (Exception e) {
+//            return ResponseEntity.internalServerError().body("An error occurred: " + e.getMessage());
+//        }
+//    } 
     @PostMapping("/save")
     public ResponseEntity<?> saveTokenAndUserInfo(@RequestBody TokenValueDTO tokenValueDTO) {
         // Save the token
@@ -33,13 +58,18 @@ public class JwtTokenController {
             return ResponseEntity.badRequest().body("Failed to save token");
         }
 
-        // Use the token to fetch user info from Google and save it
-        try {
-            Map<String, Object> userInfo = jwtTokenService.getUserInfo(tokenValueDTO.getTokenValue());
-            if (userInfo == null || userInfo.isEmpty()) {
-                return ResponseEntity.badRequest().body("Failed to fetch user info from Google");
-            }
+        // Assume the tokenValueDTO contains some user info as a string for testing
+        String fakeUserInfo = tokenValueDTO.getTokenValue(); // 이 부분은 테스트 목적으로 추가된 부분입니다.
 
+        // Create a fake user map from the token value string
+        Map<String, Object> userInfo = Map.of(
+                "name", fakeUserInfo,
+                "email", fakeUserInfo + "@example.com",
+                "id", UUID.randomUUID().toString()
+        );
+
+        // Save the fake user info
+        try {
             User savedUser = userService.saveGoogleUserInfo(userInfo);
             if (savedUser == null) {
                 return ResponseEntity.internalServerError().body("Failed to save user info");
@@ -50,4 +80,5 @@ public class JwtTokenController {
             return ResponseEntity.internalServerError().body("An error occurred: " + e.getMessage());
         }
     }
+
 }
