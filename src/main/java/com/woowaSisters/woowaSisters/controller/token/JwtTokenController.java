@@ -89,43 +89,40 @@ public class JwtTokenController {
 //        }
         @PostMapping("/save")
         public ResponseEntity<?> saveTokenAndUserInfo(@RequestBody TokenValueDTO tokenValueDTO) {
-            // Save the token
+            // 1. 클라이언트에서 소셜 로그인 후 발급된 토큰을 DB에 저장
             JwtToken jwtToken = jwtTokenService.saveToken(tokenValueDTO.getTokenValue());
             if (jwtToken == null) {
                 return ResponseEntity.badRequest().body("Failed to save token");
             }
 
-            // Use the token to fetch user info from Google
-            Map<String, Object> userInfo;
-            try {
-                userInfo = jwtTokenService.getUserInfo(tokenValueDTO.getTokenValue());
-                if (userInfo == null || userInfo.isEmpty()) {
-                    return ResponseEntity.badRequest().body("Failed to fetch user info from Google");
-                }
-            } catch (Exception e) {
-                return ResponseEntity.internalServerError().body("An error occurred while fetching user info: " + e.getMessage());
-            }
-
-            // Check if the user already exists
+            // 2. 토큰을 사용하여 해당 사용자가 이미 저장된 사용자인지 확인
+            Map<String, Object> userInfo = null;
             boolean userExists = userService.existsByEmail((String) userInfo.get("email"));
             if (userExists) {
-                // Return true if the user already exists
+                // 이미 존재하는 사용자인 경우 true 반환
                 return ResponseEntity.ok().body(true);
-            }
+            } else {
+                // 3. false일 경우 토큰을 사용하여 구글 서버에 요청해서 사용자 정보를 받아옴
+                try {
+                    userInfo = jwtTokenService.getUserInfo(tokenValueDTO.getTokenValue());
+                    if (userInfo == null || userInfo.isEmpty()) {
+                        return ResponseEntity.badRequest().body("Failed to fetch user info from Google");
+                    }
 
-            // Save the user info obtained from Google
-            try {
-                User savedUser = userService.saveGoogleUserInfo(userInfo);
-                if (savedUser == null) {
-                    return ResponseEntity.internalServerError().body("Failed to save user info");
+                    // 받아온 사용자 정보를 DB에 저장
+                    User savedUser = userService.saveGoogleUserInfo(userInfo);
+                    if (savedUser == null) {
+                        return ResponseEntity.internalServerError().body("Failed to save user info");
+                    }
+
+                    // 새로 저장된 사용자 정보와 함께 false 반환
+                    return ResponseEntity.ok().body(false);
+                } catch (Exception e) {
+                    return ResponseEntity.internalServerError().body("An error occurred while fetching user info: " + e.getMessage());
                 }
-
-                // Return false as the user did not exist and was just created
-                return ResponseEntity.ok().body(false);
-            } catch (Exception e) {
-                return ResponseEntity.internalServerError().body("An error occurred while saving user info: " + e.getMessage());
             }
         }
+
 
 
 
