@@ -17,7 +17,6 @@ import java.util.Properties;
 
 @Configuration
 @EnableJpaRepositories(basePackages = {
-
         "com.woowaSisters.woowaSisters.domain.user",
         "com.woowaSisters.woowaSisters.domain.test",
         "com.woowaSisters.woowaSisters.domain.meeting",
@@ -31,7 +30,7 @@ public class JpaConfig {
     @Bean
     public DataSource dataSource(DataSourceProperties dataSourceProperties) {
         return dataSourceProperties.initializeDataSourceBuilder()
-                .url("jdbc:mariadb://solux-db.c4omdoqvmmyi.ap-northeast-2.rds.amazonaws.com:3306/test-db")
+                .url("jdbc:mariadb://woowa-db.c4omdoqvmmyi.ap-northeast-2.rds.amazonaws.com:3306/test-db")
                 .username("admin")
                 .password("soluxpassword")
                 .driverClassName("org.mariadb.jdbc.Driver") // MariaDB의 경우 org.mariadb.jdbc.Driver를 사용합니다.
