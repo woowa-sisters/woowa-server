@@ -20,7 +20,7 @@ import java.util.UUID;
 @Table(name = "user")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO) // or GenerationType.UUID
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_uuid", columnDefinition = "BINARY(16)")
     private UUID userUuid;
 
@@ -39,33 +39,39 @@ public class User {
     @Column(name = "login_id")
     private String loginId;
 
-    @Column(name="username")
+    @Column(name = "username")
     private String username;
 
-    // 구글로그인
+    // Google OAuth 정보
     @Column(name = "provider")
     private String provider;
+
     @Column(name = "provider_id")
     private String providerId;
 
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
-//    @JsonProperty("userUuid")
-//    public UUID getUserUuid() {
-//        return userUuid;
-//    }
+    @Column(name = "picture_url")
+    private String pictureUrl;
 
-    // 추가
-    @Column(name="name")
+    @Column(name = "locale")
+    private String locale;
+
+    @Column(name = "verified_email")
+    private Boolean verifiedEmail;
+
+    // 추가 정보 필드
+    @Column(name = "name")
     private String name;
 
-    @Column(name="introduce")
+    @Column(name = "introduce")
     private String introduce;
 
-    @Column(name="rule")
+    @Column(name = "rule")
     private String rule;
 
+    // JSON 속성 이름 지정
     @JsonProperty("userId")
     public String getUserId() {
         return userId;
@@ -85,6 +91,4 @@ public class User {
     public String getPassword() {
         return password;
     }
-
-
 }

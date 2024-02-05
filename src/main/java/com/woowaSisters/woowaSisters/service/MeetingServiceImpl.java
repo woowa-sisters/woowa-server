@@ -31,23 +31,32 @@ public class MeetingServiceImpl implements MeetingService {
     // 모임 생성
     @Override
     public Meeting createMeeting(User user, MeetingSaveDto meetingSaveDto){
-        // 예외 처리
-        if (meetingSaveDto.getMeetingTitle() == null || meetingSaveDto.getMeetingTitle().isEmpty()) {
-            throw new IllegalArgumentException("모임 제목을 입력하세요");
-        }
-        if (meetingSaveDto.getMeetingAttendees() == null || meetingSaveDto.getMeetingAttendees() <= 0) {
-            throw new IllegalArgumentException("모임 최소 인원수는 1명입니다");
-        }
-        if (meetingSaveDto.getMeetingTime() <= 0) {
-            throw new IllegalArgumentException("모임 시간은 필수 요소입니다");
-        }
-        if (meetingSaveDto.getMeetingLocation() == null || meetingSaveDto.getMeetingLocation().isEmpty()) {
-            throw new IllegalArgumentException("모임 장소를 입력하세요");
-        }
-        Meeting meeting = meetingSaveDto.toEntity(user);
+        try {
+            // 예외 처리
+            if (meetingSaveDto.getMeetingTitle() == null || meetingSaveDto.getMeetingTitle().isEmpty()) {
+                throw new IllegalArgumentException("모임 제목을 입력하세요");
+            }
+            if (meetingSaveDto.getMeetingAttendees() == null || meetingSaveDto.getMeetingAttendees() <= 0) {
+                throw new IllegalArgumentException("모임 최소 인원수는 1명입니다");
+            }
+            if (meetingSaveDto.getMeetingTime() <= 0) {
+                throw new IllegalArgumentException("모임 시간은 필수 요소입니다");
+            }
+            if (meetingSaveDto.getMeetingLocation() == null || meetingSaveDto.getMeetingLocation().isEmpty()) {
+                throw new IllegalArgumentException("모임 장소를 입력하세요");
+            }
+            Meeting meeting = meetingSaveDto.toEntity(user);
 
-        // 실제로 저장
-        return meetingRepository.save(meeting);
+            // 실제로 저장
+            return meetingRepository.save(meeting);
+
+        } catch (Exception e) {
+            // 예외 로깅
+            e.printStackTrace();
+            // 필요한 경우 사용자 정의 예외를 던집니다.
+            throw new RuntimeException("모임 저장 중 에러가 발생했습니다.", e);
+        }
+
 
     }
 
