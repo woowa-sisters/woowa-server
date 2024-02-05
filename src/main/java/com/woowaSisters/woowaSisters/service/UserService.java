@@ -3,6 +3,7 @@ package com.woowaSisters.woowaSisters.service;
 import com.woowaSisters.woowaSisters.domain.user.User;
 import com.woowaSisters.woowaSisters.domain.user.UserRepository;
 import com.woowaSisters.woowaSisters.domain.userInfo.UserInfo;
+import com.woowaSisters.woowaSisters.domain.userInfo.UserInfoRepository;
 import com.woowaSisters.woowaSisters.dto.UserInfoDTO;
 import com.woowaSisters.woowaSisters.dto.UserSignupDTO;
 import org.springframework.beans.factory.annotation.Autowired;
