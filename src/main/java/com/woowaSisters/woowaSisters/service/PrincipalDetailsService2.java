@@ -19,7 +19,7 @@ import javax.transaction.Transactional;
 @Transactional
 @Service
 @RequiredArgsConstructor
-public class PrincipalDetailsService implements UserDetailsService {
+public class PrincipalDetailsService2 implements UserDetailsService {
 
     private final UserRepository userRepository;
 

@@ -18,7 +18,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
+public class PrincipalOauth2UserService2 extends DefaultOAuth2UserService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder encoder;

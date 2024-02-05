@@ -29,13 +29,13 @@ import java.util.UUID;
 @Component
 @Transactional
 //@RequiredArgsConstructor
-public class UserServiceImpl implements UserService, UserDetailsService {
+public class UserService2Impl implements UserService2, UserDetailsService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder encoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, @Qualifier("passwordEncoder") BCryptPasswordEncoder encoder) {
+    public UserService2Impl(UserRepository userRepository, @Qualifier("passwordEncoder") BCryptPasswordEncoder encoder) {
         this.userRepository = userRepository;
         this.encoder = encoder;
     }

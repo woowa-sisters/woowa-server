@@ -6,7 +6,7 @@ import com.woowaSisters.woowaSisters.dto.request.JoinRequest;
 import com.woowaSisters.woowaSisters.dto.request.LoginRequest;
 import com.woowaSisters.woowaSisters.dto.request.PasswordResetRequest;
 import com.woowaSisters.woowaSisters.domain.user.User;
-import com.woowaSisters.woowaSisters.service.UserService;
+import com.woowaSisters.woowaSisters.service.UserService2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
@@ -30,14 +30,14 @@ import java.util.UUID;
 @RestController
 //@RequiredArgsConstructor
 @RequestMapping("/api")
-public class UserController {
-    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+public class UserController2 {
+    private static final Logger logger = LoggerFactory.getLogger(UserController2.class);
     @Resource
-    private final UserService userService;
+    private final UserService2 userService2;
 
     @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
+    public UserController2(UserService2 userService2) {
+        this.userService2 = userService2;
     }
     // 회원가입
     @PostMapping("/register")
@@ -45,12 +45,12 @@ public class UserController {
         try {
 
             // id 중복체크
-            if (userService.checkUserIdDuplicate(joinRequest.getUserId())) {
+            if (userService2.checkUserIdDuplicate(joinRequest.getUserId())) {
                 bindingResult.addError(new FieldError("joinRequest", "userId", "중복된 아이디 입니다"));
             }
 
             // 이메일 중복체크
-            if (userService.checkEmailDuplicate(joinRequest.getEmail())) {
+            if (userService2.checkEmailDuplicate(joinRequest.getEmail())) {
                 bindingResult.addError(new FieldError("joinRequest", "email", "중복된 이메일입니다"));
             }
 
@@ -65,7 +65,7 @@ public class UserController {
                 return ResponseEntity.badRequest().build();
             }
 
-            User newUser = userService.join(joinRequest);
+            User newUser = userService2.join(joinRequest);
 
             return ResponseEntity.ok(newUser);
         } catch (Exception e) {
@@ -76,21 +76,21 @@ public class UserController {
 
     @PostMapping("/register/id/check")
     public ResponseEntity<Boolean> checkUserIdDuplicate(@RequestBody String userId) {
-        boolean isDuplicate = userService.checkUserIdDuplicate(userId);
+        boolean isDuplicate = userService2.checkUserIdDuplicate(userId);
         // new throw Excpetion ...
         return ResponseEntity.ok(isDuplicate);
     }
 
     @PostMapping("/register/email/check")
     public ResponseEntity<Boolean> checkEmailDuplicate(@RequestBody String email) {
-        boolean isDuplicate = userService.checkEmailDuplicate(email);
+        boolean isDuplicate = userService2.checkEmailDuplicate(email);
         return ResponseEntity.ok(isDuplicate);
     }
 
     // 아이디 찾기
     @PostMapping("/findId")
     public ResponseEntity<String> findUserId(@RequestBody FindUserIdRequest findUserIdRequest) {
-        String userId = userService.findUserId(findUserIdRequest.getEmail());
+        String userId = userService2.findUserId(findUserIdRequest.getEmail());
         if (userId != null) {
             return ResponseEntity.ok(userId);
         } else {
@@ -101,7 +101,7 @@ public class UserController {
     // 비밀번호 재설정
     @PutMapping("/resetPw")
     public ResponseEntity<String> resetPassword(@RequestBody PasswordResetRequest passwordResetRequest) {
-        boolean isReset = userService.resetPassword(passwordResetRequest.getUserId(), passwordResetRequest.getNewPassword());
+        boolean isReset = userService2.resetPassword(passwordResetRequest.getUserId(), passwordResetRequest.getNewPassword());
         if (isReset) {
             return ResponseEntity.ok("비밀번호가 재설정되었습니다.");
         } else {
@@ -120,7 +120,7 @@ public class UserController {
             return ResponseEntity.badRequest().body("아이디와 비밀번호를 입력하세요.");
         }
 
-        User user = userService.login(loginRequest);
+        User user = userService2.login(loginRequest);
 
         if (user != null) {
             return ResponseEntity.ok("로그인에 성공하였습니다.");
@@ -146,7 +146,7 @@ public class UserController {
     public ResponseEntity<User> findByUserUuid(@Valid @PathVariable("userUuid") String userUuidString){
         try {
             UUID userUuid = UUID.fromString(userUuidString);
-            User userProfile = userService.findByUserUuid(userUuid);
+            User userProfile = userService2.findByUserUuid(userUuid);
             System.out.println("!!!!!!!!!!check"+ userUuid);
             return ResponseEntity.ok(userProfile);
         } catch (IllegalArgumentException e) {

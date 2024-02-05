@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Lazy;
 import java.util.UUID;
 
 @Lazy
-public interface UserService {
+public interface UserService2 {
 
 
 
