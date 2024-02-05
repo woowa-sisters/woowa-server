@@ -16,9 +16,8 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/v1/token")
 public class JwtTokenController {
-
     private final JwtTokenService jwtTokenService;
-    private final UserService userService; // UserService 주입
+    private final UserService userService;
 
     @Autowired
     public JwtTokenController(JwtTokenService jwtTokenService, UserService userService) {
@@ -27,16 +26,28 @@ public class JwtTokenController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<JwtToken> saveToken(@RequestBody TokenValueDTO tokenValueDTO) {
-        System.out.println("==========================================확인===============" + tokenValueDTO.getTokenValue());
+    public ResponseEntity<?> saveTokenAndUserInfo(@RequestBody TokenValueDTO tokenValueDTO) {
+        // Save the token
         JwtToken jwtToken = jwtTokenService.saveToken(tokenValueDTO.getTokenValue());
-        return ResponseEntity.ok(jwtToken);
-    }
+        if (jwtToken == null) {
+            return ResponseEntity.badRequest().body("Failed to save token");
+        }
 
-    @GetMapping("/userinfo")
-    public ResponseEntity<?> getUserInfo(@RequestParam String accessToken) {
-        Map<String, Object> userInfo = jwtTokenService.getUserInfo(accessToken);
-        User savedUser = userService.saveGoogleUserInfo(userInfo); // Google 사용자 정보를 DB에 저장
-        return ResponseEntity.ok(savedUser); // 저장된 사용자 정보를 반환
+        // Use the token to fetch user info from Google and save it
+        try {
+            Map<String, Object> userInfo = jwtTokenService.getUserInfo(tokenValueDTO.getTokenValue());
+            if (userInfo == null || userInfo.isEmpty()) {
+                return ResponseEntity.badRequest().body("Failed to fetch user info from Google");
+            }
+
+            User savedUser = userService.saveGoogleUserInfo(userInfo);
+            if (savedUser == null) {
+                return ResponseEntity.internalServerError().body("Failed to save user info");
+            }
+
+            return ResponseEntity.ok(savedUser);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("An error occurred: " + e.getMessage());
+        }
     }
 }
