@@ -16,6 +16,10 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    public boolean existsByEmail(String email) {
+        return userRepository.existsByEmail(email);
+    }
+
     public User saveGoogleUserInfo(Map<String, Object> userInfo) {
         if (!userRepository.existsByEmail((String) userInfo.get("email"))) {
             User user = User.builder()
