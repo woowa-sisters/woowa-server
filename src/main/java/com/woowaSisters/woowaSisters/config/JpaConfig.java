@@ -17,13 +17,13 @@ import java.util.Properties;
 
 @Configuration
 @EnableJpaRepositories(basePackages = {
-        "com.woowaSisters.woowaSisters.domain.meeting",
+        "com.woowaSisters.woowaSisters.domain.PREVIOUS",
         "com.woowaSisters.woowaSisters.domain.user",
-        "com.woowaSisters.woowaSisters.domain.park",
-        "com.woowaSisters.woowaSisters.domain.bookmark",
-        "com.woowaSisters.woowaSisters.domain.community",
-        "com.woowaSisters.woowaSisters.domain.likes",
-        "com.woowaSisters.woowaSisters.domain.test"
+        "com.woowaSisters.woowaSisters.domain.test",
+        "com.woowaSisters.woowaSisters.domain.meeting",
+        "com.woowaSisters.woowaSisters.domain.comment",
+        "com.woowaSisters.woowaSisters.domain.subBook",
+        "com.woowaSisters.woowaSisters.domain.token",
 
 })
 public class JpaConfig {
@@ -46,13 +46,13 @@ public class JpaConfig {
         LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactoryBean.setDataSource(dataSource);
         entityManagerFactoryBean.setPackagesToScan(
+                "com.woowaSisters.woowaSisters.domain.PREVIOUS",
                 "com.woowaSisters.woowaSisters.domain.meeting",
                 "com.woowaSisters.woowaSisters.domain.user",
-                "com.woowaSisters.woowaSisters.domain.park",
-                "com.woowaSisters.woowaSisters.domain.bookmark",
-                "com.woowaSisters.woowaSisters.domain.community",
-                "com.woowaSisters.woowaSisters.domain.likes",
-                "com.woowaSisters.woowaSisters.domain.test"
+                "com.woowaSisters.woowaSisters.domain.test",
+                "com.woowaSisters.woowaSisters.domain.comment",
+                "com.woowaSisters.woowaSisters.domain.subBook",
+                "com.woowaSisters.woowaSisters.domain.token"
         );
 
         JpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
