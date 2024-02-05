@@ -23,6 +23,7 @@ public class JwtTokenController {
 
     @PostMapping("/save")
     public ResponseEntity<JwtToken> saveToken(@RequestBody TokenValueDTO tokenValueDTO) {
+        System.out.println("==========================================확인===============" + tokenValueDTO.getTokenValue());
         JwtToken jwtToken = jwtTokenService.saveToken(tokenValueDTO.getTokenValue());
         return ResponseEntity.ok(jwtToken);
     }
