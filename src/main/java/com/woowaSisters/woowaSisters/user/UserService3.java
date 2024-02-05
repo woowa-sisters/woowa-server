@@ -11,13 +11,13 @@ import static com.woowaSisters.woowaSisters.util.BaseResponseStatus.POST_USERS_E
 
 @Slf4j
 @Service
-public class UserService {
+public class UserService3 {
 
     private final UserProvider userProvider;
     private final UserDao userDao;
 
     @Autowired
-    public UserService( UserProvider userProvider, UserDao userDao) {
+    public UserService3(UserProvider userProvider, UserDao userDao) {
         this.userProvider = userProvider;
         this.userDao = userDao;
     }

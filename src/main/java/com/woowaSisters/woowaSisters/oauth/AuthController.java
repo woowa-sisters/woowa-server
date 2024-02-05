@@ -3,7 +3,7 @@ package com.woowaSisters.woowaSisters.oauth;
 import com.woowaSisters.woowaSisters.oauth.dto.*;
 import com.woowaSisters.woowaSisters.oauth.jwt.JwtTokenProvider;
 import com.woowaSisters.woowaSisters.oauth.model.PrincipalDetails;
-import com.woowaSisters.woowaSisters.user.UserService;
+import com.woowaSisters.woowaSisters.user.UserService3;
 import com.woowaSisters.woowaSisters.user.model.User;
 import com.woowaSisters.woowaSisters.util.BaseException;
 import com.woowaSisters.woowaSisters.util.BaseResponse;
@@ -23,15 +23,15 @@ public class AuthController {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider jwtTokenProvider;
-    private final UserService userService;
+    private final UserService3 userService3;
     private final AuthService authService;
 
     @Autowired
-    public AuthController(PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtTokenProvider jwtTokenProvider, UserService userService, AuthService authService) {
+    public AuthController(PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtTokenProvider jwtTokenProvider, UserService3 userService3, AuthService authService) {
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
         this.jwtTokenProvider = jwtTokenProvider;
-        this.userService = userService;
+        this.userService3 = userService3;
         this.authService = authService;
     }
 
@@ -42,7 +42,7 @@ public class AuthController {
         User user = new User(postUserReq.getUsername(), postUserReq.getNickname(),
                 postUserReq.getEmail(), encodedPassword, "ROLE_USER", "none", "none");
         try {
-            userService.createUser(user);
+            userService3.createUser(user);
             return new BaseResponse("회원가입에 성공하였습니다.");
         } catch (BaseException e) {
             return new BaseResponse(e.getStatus());

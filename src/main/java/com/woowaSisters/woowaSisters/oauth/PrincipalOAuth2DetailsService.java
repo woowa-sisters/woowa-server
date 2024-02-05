@@ -1,7 +1,7 @@
 package com.woowaSisters.woowaSisters.oauth;
 
 import com.woowaSisters.woowaSisters.oauth.model.PrincipalDetails;
-import com.woowaSisters.woowaSisters.user.UserService;
+import com.woowaSisters.woowaSisters.user.UserService3;
 import com.woowaSisters.woowaSisters.user.UserProvider;
 import com.woowaSisters.woowaSisters.user.model.User;
 import com.woowaSisters.woowaSisters.util.BaseException;
@@ -20,13 +20,13 @@ public class PrincipalOAuth2DetailsService extends DefaultOAuth2UserService {
 
     private final PasswordEncoder passwordEncoder;
     private final UserProvider userProvider;
-    private final UserService userService;
+    private final UserService3 userService3;
 
     @Autowired
-    public PrincipalOAuth2DetailsService(PasswordEncoder passwordEncoder, UserProvider userProvider, UserService userService) {
+    public PrincipalOAuth2DetailsService(PasswordEncoder passwordEncoder, UserProvider userProvider, UserService3 userService3) {
         this.passwordEncoder = passwordEncoder;
         this.userProvider = userProvider;
-        this.userService = userService;
+        this.userService3 = userService3;
     }
 
     @Override
@@ -47,7 +47,7 @@ public class PrincipalOAuth2DetailsService extends DefaultOAuth2UserService {
             if ( userProvider.checkEmail(email) == 0) {
                 log.info("구글 로그인이 최초입니다. 회원가입을 진행합니다.");
                 user = new User(username, nickname, email, password, role, provider, provider_id);
-                userService.createUser(user);
+                userService3.createUser(user);
             }else {
                 log.info("구글 로그인 기록이 있습니다.");
                 user = userProvider.retrieveByEmail(email);

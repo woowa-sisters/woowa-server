@@ -15,12 +15,12 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 @RestController
 @RequestMapping("/users")
-public class UserController {
+public class UserController3 {
 
     private final UserProvider userProvider;
 
     @Autowired
-    public UserController(UserProvider userProvider) {
+    public UserController3(UserProvider userProvider) {
         this.userProvider = userProvider;
     }
 
