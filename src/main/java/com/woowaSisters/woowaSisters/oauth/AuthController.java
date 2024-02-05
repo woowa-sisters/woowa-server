@@ -1,14 +1,17 @@
 package com.woowaSisters.woowaSisters.oauth;
 
-import com.woowaSisters.woowaSisters.oauth.dto.PostSignupReq;
+import com.woowaSisters.woowaSisters.oauth.dto.*;
 import com.woowaSisters.woowaSisters.oauth.jwt.JwtTokenProvider;
-import com.woowaSisters.woowaSisters.service.user.UserService;
+import com.woowaSisters.woowaSisters.oauth.model.PrincipalDetails;
+import com.woowaSisters.woowaSisters.user.UserService;
 import com.woowaSisters.woowaSisters.user.model.User;
 import com.woowaSisters.woowaSisters.util.BaseException;
 import com.woowaSisters.woowaSisters.util.BaseResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,7 +1,7 @@
 package com.woowaSisters.woowaSisters.oauth;
 
 import com.woowaSisters.woowaSisters.oauth.model.PrincipalDetails;
-import com.woowaSisters.woowaSisters.service.user.UserService;
+import com.woowaSisters.woowaSisters.user.UserService;
 import com.woowaSisters.woowaSisters.user.UserProvider;
 import com.woowaSisters.woowaSisters.user.model.User;
 import com.woowaSisters.woowaSisters.util.BaseException;

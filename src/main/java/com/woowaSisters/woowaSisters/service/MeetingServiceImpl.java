@@ -215,10 +215,10 @@ public class MeetingServiceImpl implements MeetingService {
     public Set<Meeting> getSubscribedMeetings(UUID userUuid) {
         Optional<User> userOptional = userRepository.findById(userUuid);
 
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            return user.getSubscribedMeetings();
-        }
+//        if (userOptional.isPresent()) {
+//            User user = userOptional.get();
+//            return user.getSubscribedMeetings();
+//        }
 
         return Collections.emptySet(); // 사용자를 찾을 수 없을 경우 빈 Set 반환
     }

@@ -24,9 +24,10 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@EntityScan(basePackageClasses = {Parks.class, User.class, Meeting.class, Bookmark.class, Community.class, Test.class, Comment.class, Meeting.class, SubBook.class, JwtToken.class})
-@EnableJpaRepositories (basePackageClasses = {UserRepository.class, ParkRepository.class, MeetingRepository.class, BookmarkRepository.class, CommunityRepository.class, TestRepository.class, CommentRepository.class, MeetingRepository.class, SubBookRepository.class, JwtTokenRepository.class})
-
+//@EntityScan(basePackageClasses = {Parks.class, User.class, Meeting.class, Bookmark.class, Community.class, Test.class, Comment.class, Meeting.class, SubBook.class, JwtToken.class, })
+//@EnableJpaRepositories (basePackageClasses = {UserRepository.class, ParkRepository.class, MeetingRepository.class, BookmarkRepository.class, CommunityRepository.class, TestRepository.class, CommentRepository.class, MeetingRepository.class, SubBookRepository.class, JwtTokenRepository.class})
+@EnableJpaRepositories
+@EntityScan
 public class WoowaSistersApplication {
 
 	public static void main(String[] args) {

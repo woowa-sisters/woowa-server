@@ -28,6 +28,7 @@ import java.util.Properties;
         "com.woowaSisters.woowaSisters.domain.comment",
         "com.woowaSisters.woowaSisters.domain.subBook",
         "com.woowaSisters.woowaSisters.domain.token",
+        "com.woowaSisters.woowaSisters.user.model"
 
 })
 public class JpaConfig {
@@ -59,7 +60,8 @@ public class JpaConfig {
                 "com.woowaSisters.woowaSisters.domain.test",
                 "com.woowaSisters.woowaSisters.domain.comment",
                 "com.woowaSisters.woowaSisters.domain.subBook",
-                "com.woowaSisters.woowaSisters.domain.token"
+                "com.woowaSisters.woowaSisters.domain.token",
+                "com.woowaSisters.woowaSisters.user.model"
         );
 
         JpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();

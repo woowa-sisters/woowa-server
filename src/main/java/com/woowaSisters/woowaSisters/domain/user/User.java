@@ -56,6 +56,16 @@ public class User {
 //        return userUuid;
 //    }
 
+    // 추가
+    @Column(name="name")
+    private String name;
+
+    @Column(name="introduce")
+    private String introduce;
+
+    @Column(name="rule")
+    private String rule;
+
     @JsonProperty("userId")
     public String getUserId() {
         return userId;
@@ -75,9 +85,6 @@ public class User {
     public String getPassword() {
         return password;
     }
-
-    @ManyToMany(mappedBy = "subscribers")
-    private Set<Meeting> subscribedMeetings = new HashSet<>();
 
 
 }
