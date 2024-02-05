@@ -12,4 +12,7 @@ public interface SubBookRepository extends JpaRepository<SubBook, UUID> {
     @Query("SELECT s FROM SubBook s")
     List<SubBook> findByUserId(Long userId);
     // where userId = :userId
+
+    @Query("delete from SubBook s where s.userId = :userId and s.bookId = :bookId")
+    void deleteByBookId(Long userId, Long bookId);
 }
