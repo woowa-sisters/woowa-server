@@ -26,6 +26,13 @@ public class JwtTokenController {
         this.userService = userService;
     }
 
+    @PostMapping("/save")
+    public ResponseEntity<JwtToken> saveToken(@RequestBody TokenValueDTO tokenValueDTO) {
+        System.out.println("==========================================확인===============" + tokenValueDTO.getTokenValue());
+        JwtToken jwtToken = jwtTokenService.saveToken(tokenValueDTO.getTokenValue());
+        return ResponseEntity.ok(jwtToken);
+    }
+
     @GetMapping("/userinfo")
     public ResponseEntity<?> getUserInfo(@RequestParam String accessToken) {
         Map<String, Object> userInfo = jwtTokenService.getUserInfo(accessToken);
