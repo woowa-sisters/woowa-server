@@ -2,7 +2,11 @@ package com.woowaSisters.woowaSisters.domain.token;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -25,8 +29,19 @@ public class JwtToken {
     @Column(name = "access_token", columnDefinition = "TEXT")
     private String accessToken;
 
-    @Column(name = "refresh_token", columnDefinition = "TEXT")
+    @Column(name = "refresh_token", columnDefinition = "TEXT", nullable = true)
     private String refreshToken;
+
+    @Column(name = "created_at")
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
+
+    @Column(name = "deleted_at")
+    private LocalDateTime deletedAt;
 
 
 //    @JsonProperty("tokenValue")
@@ -37,4 +52,7 @@ public class JwtToken {
 
     @JsonProperty("refreshToken")
     public String getRefreshToken() {return refreshToken;}
+
+
+
 }
