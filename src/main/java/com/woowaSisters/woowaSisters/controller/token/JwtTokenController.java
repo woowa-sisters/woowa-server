@@ -23,7 +23,7 @@ import javax.validation.Valid;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/v1/token")
+@RequestMapping("/v1")
 public class JwtTokenController {
     private final JwtTokenService jwtTokenService;
     private final UserService userService;
@@ -35,7 +35,7 @@ public class JwtTokenController {
 
     }
 
-    @PostMapping("/save")
+    @PostMapping("/token/save")
     public ResponseEntity<?> saveTokenAndUserInfo(@RequestBody TokenValueDTO tokenValueDTO) {
 
         JwtToken jwtToken = jwtTokenService.saveToken(tokenValueDTO.getAccessToken(), tokenValueDTO.getRefreshToken());
