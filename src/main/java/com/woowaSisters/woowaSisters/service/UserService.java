@@ -5,8 +5,8 @@ import com.woowaSisters.woowaSisters.domain.user.UserRepository;
 import com.woowaSisters.woowaSisters.domain.userInfo.UserInfo;
 import com.woowaSisters.woowaSisters.domain.userInfo.UserInfoRepository;
 import com.woowaSisters.woowaSisters.dto.UserInfoDTO;
-import com.woowaSisters.woowaSisters.dto.UserSignupDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.Column;
@@ -28,6 +28,11 @@ public class UserService {
 
     public boolean existsByEmail(String email) {
         return userRepository.existsByEmail(email);
+    }
+
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
     }
 
     public User saveGoogleUserInfo(Map<String, Object> userInfo) {

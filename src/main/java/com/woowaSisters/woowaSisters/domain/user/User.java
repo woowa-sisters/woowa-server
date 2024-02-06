@@ -6,6 +6,7 @@ import com.woowaSisters.woowaSisters.domain.meeting.Meeting;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -41,6 +42,9 @@ public class User {
 
     @Column(name = "username")
     private String username;
+
+    @Column(name = "deleted_at")
+    private LocalDateTime deletedAt;
 
     // Google OAuth 정보
     @Column(name = "provider")
@@ -91,4 +95,5 @@ public class User {
     public String getPassword() {
         return password;
     }
+
 }

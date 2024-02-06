@@ -52,17 +52,22 @@ public class JwtTokenController {
 
         boolean userExists = userService.existsByEmail((String) userInfo.get("email"));
         if (userExists) {
-            // 이미 존재하는 사용자인 경우
-            return ResponseEntity.ok().body(true);
+            User existingUser = userService.findByEmail((String) userInfo.get("email"));
+            if (existingUser.getDeletedAt() != null) {
+                // 사용자가 로그아웃 상태
+                return ResponseEntity.badRequest().body("User already logout");
+            }
+            return ResponseEntity.ok().body(true); // 기존 사용자 정보 확인
         } else {
             // 새로운 사용자 정보를 저장
             User savedUser = userService.saveGoogleUserInfo(userInfo);
-            if (savedUser == null) {
-                return ResponseEntity.internalServerError().body("Failed to save user info");
+            if (savedUser == null || savedUser.getDeletedAt() != null) {
+                return ResponseEntity.internalServerError().body("Failed to save user info or user is deleted");
             }
             return ResponseEntity.ok().body(false); // 새로운 사용자 정보 저장 성공
         }
     }
+
 
     @PostMapping("/logout")
     public ResponseEntity<?> logout(HttpServletRequest request) {
