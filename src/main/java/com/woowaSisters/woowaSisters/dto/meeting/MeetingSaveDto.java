@@ -17,13 +17,13 @@ public class MeetingSaveDto {
     private long meetingTime;
     private String meetingLocation;
     private String meetingContent;
-    private Long bookId;
+    private String bookId;
     private UUID meetingUuid;
 
     @Builder
     public MeetingSaveDto(String meetingTitle, UUID userUuid, Integer meetingAttendees,
                           long meetingTime, String meetingLocation, String meetingContent,
-                          Long bookId, UUID meetingUuid) {
+                          String bookId, UUID meetingUuid) {
         this.meetingTitle = meetingTitle;
         this.userUuid = userUuid;
         this.meetingAttendees = meetingAttendees;
