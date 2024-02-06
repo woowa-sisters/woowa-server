@@ -32,4 +32,11 @@ public class BaseResponse<T> {
         this.message = status.getMessage();
         this.code = status.getCode();
     }
+
+    public BaseResponse(BaseResponseStatus status, String additionalMessage) {
+        this.isSuccess = status.isSuccess();
+        this.message = status.getMessage() + ": " + additionalMessage;
+        this.code = status.getCode();
+        this.result = null; // 또는 필요에 따라 적절한 값을 설정
+    }
 }

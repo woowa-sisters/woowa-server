@@ -12,6 +12,10 @@ public enum BaseResponseStatus {
      */
     SUCCESS(true, 1000, "요청에 성공하였습니다."),
 
+    REFRESH_TOKEN_SUCCESS(true, 1001, "Access token refreshed successfully."),
+    REFRESH_TOKEN_NOT_NEEDED(true, 1002, "Access token is already valid."),
+    REFRESH_TOKEN_FAILED(false, 2007, "Failed to refresh access token."),
+
 
     /**
      * 2000 : Request 오류
@@ -85,6 +89,9 @@ public enum BaseResponseStatus {
     AWS_ACCESS_DENIED(false,5001 ,"접근 권한이 없습니다."),
     AWS_FILE_NOT_FOUND(false,5002 ,"파일 키에 해당하는 파일이 존재하지 않습니다.");
     // 6000 : 필요시 만들어서 쓰세요
+
+
+
 
 
     private final boolean isSuccess;
