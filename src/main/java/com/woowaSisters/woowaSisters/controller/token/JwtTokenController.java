@@ -35,7 +35,7 @@ public class JwtTokenController {
 
     }
 
-    @PostMapping("/token/save")
+/*    @PostMapping("/token/save")
     public ResponseEntity<?> saveTokenAndUserInfo(@RequestBody TokenValueDTO tokenValueDTO) {
 
         JwtToken jwtToken = jwtTokenService.saveToken(tokenValueDTO.getAccessToken(), tokenValueDTO.getRefreshToken());
@@ -63,6 +63,34 @@ public class JwtTokenController {
             User savedUser = userService.saveGoogleUserInfo(userInfo);
             if (savedUser == null || savedUser.getDeletedAt() != null) {
                 return ResponseEntity.internalServerError().body("Failed to save user info or user is deleted");
+            }
+            return ResponseEntity.ok().body(false); // 새로운 사용자 정보 저장 성공
+        }
+    }*/
+    @PostMapping("/token/save")
+    public ResponseEntity<?> saveTokenAndUserInfo(@RequestBody TokenValueDTO tokenValueDTO) {
+
+        JwtToken jwtToken = jwtTokenService.saveToken(tokenValueDTO.getAccessToken(), tokenValueDTO.getRefreshToken());
+
+        Map<String, Object> userInfo;
+        try {
+            userInfo = jwtTokenService.getUserInfo(tokenValueDTO.getAccessToken());
+            if (userInfo == null || userInfo.isEmpty()) {
+                return ResponseEntity.badRequest().body("Failed to fetch user info from Google");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("An error occurred while fetching user info: " + e.getMessage());
+        }
+
+        boolean userExists = userService.existsByEmail((String) userInfo.get("email"));
+        if (userExists) {
+            // 이미 존재하는 사용자인 경우
+            return ResponseEntity.ok().body(true);
+        } else {
+            // 새로운 사용자 정보를 저장
+            User savedUser = userService.saveGoogleUserInfo(userInfo);
+            if (savedUser == null) {
+                return ResponseEntity.internalServerError().body("Failed to save user info");
             }
             return ResponseEntity.ok().body(false); // 새로운 사용자 정보 저장 성공
         }
