@@ -166,25 +166,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-                .addFilterBefore(customAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+        http
+                .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-
                 .and()
-
+                .authorizeRequests()
+                .antMatchers("/v1/token/save", "/v1/logout").permitAll() // 특정 경로에 대한 인증 요구 제외
+                .anyRequest().authenticated() // 그 외 모든 요청은 인증이 필요함
+                .and()
+                .addFilterBefore(customAuthenticationFilter, UsernamePasswordAuthenticationFilter.class) // 커스텀 필터 적용
                 .exceptionHandling()
                 .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
                 .accessDeniedHandler(new CustomAccessDeniedHandler())
-
                 .and()
-
                 .oauth2Login()
                 .userInfoEndpoint()
-                
                 .userService(principalOAuth2DetailsService)
-
                 .and()
-                .successHandler(new OAuth2SuccessHandler(jwtTokenProvider,authService));
-
+                .successHandler(new OAuth2SuccessHandler(jwtTokenProvider, authService));
     }
+
+
 }
