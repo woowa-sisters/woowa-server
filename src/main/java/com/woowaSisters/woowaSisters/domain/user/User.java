@@ -43,9 +43,6 @@ public class User {
     @Column(name = "username")
     private String username;
 
-    @Column(name = "deleted_at")
-    private LocalDateTime deletedAt;
-
     // Google OAuth 정보
     @Column(name = "provider")
     private String provider;
