@@ -85,9 +85,10 @@ public class JwtTokenService {
 
     public void logoutUsingAccessToken(String accessToken) {
         JwtToken jwtToken = jwtTokenRepository.findByAccessToken(accessToken)
-                .orElseThrow(() -> new IllegalArgumentException("Token not found"));
+                .orElseThrow(() -> new IllegalArgumentException("토큰을 찾을 수 없습니다"));
         jwtToken.setDeletedAt(LocalDateTime.now());
         jwtTokenRepository.save(jwtToken);
     }
+
 
 }
