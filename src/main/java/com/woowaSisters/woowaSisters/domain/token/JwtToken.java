@@ -19,9 +19,22 @@ public class JwtToken {
     @Column(name = "token_uuid", columnDefinition = "BINARY(16)")
     private UUID tokenUuid;
 
-    @Column(name = "token_value", nullable = false, unique = true, columnDefinition = "TEXT")
-    private String tokenValue;
+//    @Column(name = "token_value", nullable = false, unique = true, columnDefinition = "TEXT")
+//    private String tokenValue;
 
-    @JsonProperty("tokenValue")
-    public String getTokenValue() {return tokenValue;}
+    @Column(name = "access_token", columnDefinition = "TEXT")
+    private String accessToken;
+
+    @Column(name = "refresh_token", columnDefinition = "TEXT")
+    private String refreshToken;
+
+
+//    @JsonProperty("tokenValue")
+//    public String getTokenValue() {return tokenValue;}
+
+    @JsonProperty("accessToken")
+    public String getAccessToken() {return accessToken;}
+
+    @JsonProperty("refreshToken")
+    public String getRefreshToken() {return refreshToken;}
 }

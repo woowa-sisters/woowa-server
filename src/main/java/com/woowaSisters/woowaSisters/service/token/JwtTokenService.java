@@ -23,9 +23,10 @@ public class JwtTokenService {
         this.restTemplate = restTemplate;
     }
 
-    public JwtToken saveToken(String tokenValue) {
+    public JwtToken saveToken(String accessToken, String refreshToken) {
         JwtToken jwtToken = JwtToken.builder()
-                .tokenValue(tokenValue)
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
                 .build();
         return jwtTokenRepository.save(jwtToken);
     }
