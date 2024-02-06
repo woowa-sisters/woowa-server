@@ -4,10 +4,13 @@ import com.woowaSisters.woowaSisters.domain.user.User;
 import com.woowaSisters.woowaSisters.domain.user.UserRepository;
 import com.woowaSisters.woowaSisters.dto.meeting.*;
 import com.woowaSisters.woowaSisters.service.MeetingService;
+import com.woowaSisters.woowaSisters.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,19 +25,42 @@ import java.util.UUID;
 public class MeetingController {
 
     private final MeetingService meetingService;
+    private final UserService userService;
     private final UserRepository userRepository;
 
     @Autowired
-    public MeetingController(MeetingService meetingService, UserRepository userRepository) {
+    public MeetingController(MeetingService meetingService, UserService userService, UserRepository userRepository) {
         this.meetingService = meetingService;
+        this.userService = userService;
         this.userRepository = userRepository;
     }
 
     // 모임 생성하기 - dto 이용
-    @PostMapping("/")
+   /* @PostMapping("/")
     public void createMeeting(@RequestBody MeetingSaveDto meetingSaveDto) {
         User user = userRepository.getReferenceById(meetingSaveDto.getUserUuid());
         meetingService.createMeeting(user, meetingSaveDto);
+    }*/
+    @PostMapping("/")
+    public ResponseEntity<?> createMeeting(@RequestBody MeetingSaveDto meetingSaveDto) {
+        // 현재 인증된 사용자의 Authentication 객체 가져오기
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        // Authentication 객체를 통해 현재 사용자의 이메일 가져오기
+        String userEmail = authentication.getName();
+
+        // UserService 인스턴스를 사용하여 이메일로 User 엔티티를 조회
+        User user = userService.findByEmail(userEmail);
+        if (user == null) {
+            // 사용자를 찾을 수 없는 경우 적절한 응답 반환
+            return ResponseEntity.badRequest().body("User not found with email: " + userEmail);
+        }
+
+        // 사용자 객체와 MeetingSaveDto를 사용하여 Meeting 객체를 생성하고 저장
+        meetingService.createMeeting(user, meetingSaveDto);
+
+        // 성공적으로 처리된 경우 적절한 응답 반환
+        return ResponseEntity.ok().build();
     }
 
     // 모임 수정하기
