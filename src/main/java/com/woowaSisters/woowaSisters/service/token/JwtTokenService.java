@@ -1,18 +1,17 @@
 package com.woowaSisters.woowaSisters.service.token;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 
@@ -90,5 +89,54 @@ public class JwtTokenService {
         jwtTokenRepository.save(jwtToken);
     }
 
+    // Google의 공개키를 캐싱하기 위한 필드
+    private Map<String, String> googlePublicKeys = new HashMap<>();
+
+    public boolean verifyIdToken(String idToken) {
+        // ID 토큰의 서명을 검증하기 위해 Google의 공개키 사용
+        // 예제에서는 실제 검증 로직을 구현하지 않고, 항상 true를 반환
+        // 실제 구현에는 JWT 라이브러리 사용하여 검증 필요
+        return true;
+    }
+
+    public boolean isAccessTokenValid(String accessToken) {
+        // 액세스 토큰이 유효한지 검증
+        // 예제에서는 실제 HTTP 요청을 보내지 않고, 항상 true를 반환
+        // 실제 구현에는 Google의 /tokeninfo 엔드포인트를 사용하여 검증 필요
+        return true;
+    }
+
+    public Optional<JwtToken> findByAccessToken(String accessToken) {
+        return jwtTokenRepository.findByAccessToken(accessToken);
+    }
+
+    public ResponseEntity<?> refreshAccessTokenUsingRefreshToken(String refreshToken) {
+        String tokenEndpoint = "https://oauth2.googleapis.com/token";
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+        MultiValueMap<String, String> requestBody = new LinkedMultiValueMap<>();
+        requestBody.add("grant_type", "refresh_token");
+        requestBody.add("refresh_token", refreshToken);
+        requestBody.add("client_id", googleClientId);
+        requestBody.add("client_secret", googleClientSecret);
+
+        HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(requestBody, headers);
+        try {
+            ResponseEntity<Map> response = restTemplate.postForEntity(tokenEndpoint, requestEntity, Map.class);
+            Map<String, Object> responseBody = response.getBody();
+
+            if (responseBody != null && responseBody.containsKey("access_token")) {
+                String newAccessToken = (String) responseBody.get("access_token");
+                // 여기서 데이터베이스 업데이트 로직 구현 필요
+                // 예: jwtTokenRepository.save(new JwtToken(...));
+                return ResponseEntity.ok().body("Access token refreshed successfully. New access token: " + newAccessToken);
+            } else {
+                return ResponseEntity.badRequest().body("Failed to refresh access token.");
+            }
+        } catch (RestClientException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error during token refresh: " + e.getMessage());
+        }
+    }
 
 }
