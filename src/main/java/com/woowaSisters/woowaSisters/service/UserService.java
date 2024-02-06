@@ -34,7 +34,6 @@ public class UserService {
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
     }
-
     public User saveGoogleUserInfo(Map<String, Object> userInfo) {
         if (!userRepository.existsByEmail((String) userInfo.get("email"))) {
             User user = User.builder()

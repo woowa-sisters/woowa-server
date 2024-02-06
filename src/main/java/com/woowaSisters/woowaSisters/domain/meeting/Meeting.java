@@ -3,6 +3,7 @@ package com.woowaSisters.woowaSisters.domain.meeting;
 import com.woowaSisters.woowaSisters.domain.user.User;
 import lombok.*;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
@@ -23,9 +24,9 @@ import org.hibernate.annotations.UpdateTimestamp;
 public class Meeting {
 
     @Id
-    //UUID를 자동으로 생성
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "meeting_uuid")
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @Column(name = "meeting_uuid", updatable = false, nullable = false)
     @Type(type = "uuid-char")
     private UUID meetingUuid;
 
@@ -113,16 +114,17 @@ public class Meeting {
 
 
     @Builder
-    public Meeting(String meetingTitle, User user ,Integer meetingAttendees,
-                   long meetingTime,String meetingLocation,String meetingContent,String meetingFee) {
+    public Meeting(String meetingTitle, User user, Integer meetingAttendees, long meetingTime, String meetingLocation, String meetingContent, String bookId, String meetingFee) {
         this.meetingTitle = meetingTitle;
         this.user = user;
         this.meetingAttendees = meetingAttendees;
         this.meetingTime = meetingTime;
         this.meetingLocation = meetingLocation;
         this.meetingContent = meetingContent;
+        this.bookId = bookId;
         this.meetingFee = meetingFee;
     }
+
     @ManyToMany
     @JoinTable(
             name = "meeting_members",

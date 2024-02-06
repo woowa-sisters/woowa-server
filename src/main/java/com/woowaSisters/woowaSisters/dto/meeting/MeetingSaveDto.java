@@ -14,27 +14,24 @@ import java.util.UUID;
 @NoArgsConstructor
 public class MeetingSaveDto {
     private String meetingTitle;
-    private UUID userUuid;
     private Integer meetingAttendees;
     private long meetingTime;
     private String meetingLocation;
     private String meetingContent;
     private String bookId;
-    private UUID meetingUuid;
     private String meetingFee;
+    private UUID meetingUuid;
 
     @Builder
-    public MeetingSaveDto(String meetingTitle, UUID userUuid, Integer meetingAttendees,
+    public MeetingSaveDto(String meetingTitle,Integer meetingAttendees,
                           long meetingTime, String meetingLocation, String meetingContent,
-                          String bookId, UUID meetingUuid,String meetingFee) {
+                          String bookId,String meetingFee) {
         this.meetingTitle = meetingTitle;
-        this.userUuid = userUuid;
         this.meetingAttendees = meetingAttendees;
         this.meetingTime = meetingTime;
         this.meetingLocation = meetingLocation;
         this.meetingContent = meetingContent;
         this.bookId = bookId;
-        this.meetingUuid = meetingUuid;
         this.meetingFee = meetingFee;
     }
 
@@ -47,7 +44,6 @@ public class MeetingSaveDto {
                 .meetingLocation(meetingLocation)
                 .meetingContent(meetingContent)
                 .bookId(bookId)
-                .meetingUuid(meetingUuid)
                 .meetingFee(meetingFee)
                 .build();
     }
