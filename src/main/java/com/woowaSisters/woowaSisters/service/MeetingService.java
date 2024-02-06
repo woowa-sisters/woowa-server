@@ -12,6 +12,7 @@ import java.util.Set;
 import java.util.UUID;
 
 public interface MeetingService {
+/*    void saveMeetingWithUserUUID(String providerId, Meeting meeting);*/
 
     Meeting createMeeting(User user, MeetingSaveDto meetingSaveDto);
 

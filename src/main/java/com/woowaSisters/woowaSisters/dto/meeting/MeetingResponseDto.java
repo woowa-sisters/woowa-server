@@ -15,15 +15,17 @@ public class MeetingResponseDto {
     private long meetingTime;
     private String meetingLocation;
     private String meetingContent;
+    private String meetingFee;
 
     @Builder
     public MeetingResponseDto(UUID meetingUuid,String meetingTitle, Integer meetingAttendees,
-                              long meetingTime, String meetingLocation, String meetingContent) {
+                              long meetingTime, String meetingLocation, String meetingContent,String meetingFee) {
         this.meetingUuid = meetingUuid;
         this.meetingTitle = meetingTitle;
         this.meetingAttendees = meetingAttendees;
         this.meetingTime = meetingTime;
         this.meetingLocation = meetingLocation;
         this.meetingContent = meetingContent;
+        this.meetingFee = meetingFee;
     }
 }

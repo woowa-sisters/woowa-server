@@ -5,10 +5,12 @@ import com.woowaSisters.woowaSisters.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.UUID;
 
 @Getter
+@Setter
 @NoArgsConstructor
 public class MeetingSaveDto {
     private String meetingTitle;
@@ -19,11 +21,12 @@ public class MeetingSaveDto {
     private String meetingContent;
     private String bookId;
     private UUID meetingUuid;
+    private String meetingFee;
 
     @Builder
     public MeetingSaveDto(String meetingTitle, UUID userUuid, Integer meetingAttendees,
                           long meetingTime, String meetingLocation, String meetingContent,
-                          String bookId, UUID meetingUuid) {
+                          String bookId, UUID meetingUuid,String meetingFee) {
         this.meetingTitle = meetingTitle;
         this.userUuid = userUuid;
         this.meetingAttendees = meetingAttendees;
@@ -32,6 +35,7 @@ public class MeetingSaveDto {
         this.meetingContent = meetingContent;
         this.bookId = bookId;
         this.meetingUuid = meetingUuid;
+        this.meetingFee = meetingFee;
     }
 
     public Meeting toEntity(User user) {
@@ -44,6 +48,7 @@ public class MeetingSaveDto {
                 .meetingContent(meetingContent)
                 .bookId(bookId)
                 .meetingUuid(meetingUuid)
+                .meetingFee(meetingFee)
                 .build();
     }
 

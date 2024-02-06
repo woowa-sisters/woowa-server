@@ -60,6 +60,9 @@ public class Meeting {
     @JsonProperty("content")
     private String meetingContent;
 
+    @Column(name = "fee")
+    private String meetingFee;
+
     @JsonProperty("uuid")
     public UUID getId() {
         return meetingUuid;
@@ -103,16 +106,22 @@ public class Meeting {
         return meetingContent;
     }
 
+    @JsonProperty("fee")
+    public String getFee() {
+        return meetingFee;
+    }
+
 
     @Builder
     public Meeting(String meetingTitle, User user ,Integer meetingAttendees,
-                   long meetingTime,String meetingLocation,String meetingContent) {
+                   long meetingTime,String meetingLocation,String meetingContent,String meetingFee) {
         this.meetingTitle = meetingTitle;
         this.user = user;
         this.meetingAttendees = meetingAttendees;
         this.meetingTime = meetingTime;
         this.meetingLocation = meetingLocation;
         this.meetingContent = meetingContent;
+        this.meetingFee = meetingFee;
     }
     @ManyToMany
     @JoinTable(

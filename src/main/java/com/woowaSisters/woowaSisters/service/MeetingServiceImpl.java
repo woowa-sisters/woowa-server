@@ -27,12 +27,30 @@ public class MeetingServiceImpl implements MeetingService {
         this.meetingRepository = meetingRepository;
         this.userRepository = userRepository;
     }
+/*
+
+    public void saveMeetingWithUserUUID(String providerId, Meeting meeting) {
+        // 유효성 검사를 위해 provider_id를 사용하여 해당하는 사용자를 찾습니다.
+        User user = userRepository.findByProviderId(providerId);
+
+        if (user != null) {
+            // provider_id에 해당하는 사용자가 존재하면 해당 user_uuid 값을 가져와 meeting 객체에 설정합니다.
+            meeting.setUserUuid(user.getUserUuid());
+
+            // meeting 테이블에 모임 정보를 저장합니다.
+            meetingRepository.save(meeting);
+
+        } else {
+            throw new IllegalArgumentException("Provider ID에 해당하는 사용자를 찾을 수 없습니다.");
+        }
+    }
+*/
 
     // 모임 생성
     @Override
     public Meeting createMeeting(User user, MeetingSaveDto meetingSaveDto){
         try {
-            // 예외 처리
+            /*// 예외 처리
             if (meetingSaveDto.getMeetingTitle() == null || meetingSaveDto.getMeetingTitle().isEmpty()) {
                 throw new IllegalArgumentException("모임 제목을 입력하세요");
             }
@@ -44,10 +62,21 @@ public class MeetingServiceImpl implements MeetingService {
             }
             if (meetingSaveDto.getMeetingLocation() == null || meetingSaveDto.getMeetingLocation().isEmpty()) {
                 throw new IllegalArgumentException("모임 장소를 입력하세요");
-            }
+            }*/
+
+/*
+            // 유저의 토큰을 이용하여 유저 UUID 가져오기
+            String userToken = user.getToken();
+            UUID userUUID = userRepository.findUUIDByToken(userToken);
+
+            // 유저 UUID를 이용하여 MeetingSaveDto에 유저 UUID 설정
+            meetingSaveDto.setUserUUID(userUUID);
+*/
+
+            // MeetingSaveDto를 이용하여 Meeting 엔티티 생성
             Meeting meeting = meetingSaveDto.toEntity(user);
 
-            // 실제로 저장
+            // 미팅 저장
             return meetingRepository.save(meeting);
 
         } catch (Exception e) {
@@ -56,8 +85,6 @@ public class MeetingServiceImpl implements MeetingService {
             // 필요한 경우 사용자 정의 예외를 던집니다.
             throw new RuntimeException("모임 저장 중 에러가 발생했습니다.", e);
         }
-
-
     }
 
 
@@ -66,6 +93,7 @@ public class MeetingServiceImpl implements MeetingService {
         Meeting existingMeeting = meetingRepository.findById(meetingUuid)
                 .orElseThrow(() -> new EntityNotFoundException("모임을 찾을 수 없습니다"));
 
+/*
         // 업데이트에 필요한 값만 변경
         if (updateDto.getMeetingTitle() != null && !updateDto.getMeetingTitle().isEmpty()) {
             existingMeeting.setMeetingTitle(updateDto.getMeetingTitle());
@@ -82,6 +110,7 @@ public class MeetingServiceImpl implements MeetingService {
         if (updateDto.getMeetingContent() != null) {
             existingMeeting.setMeetingContent(updateDto.getMeetingContent());
         }
+*/
 
         // 저장된 모임 업데이트
         return meetingRepository.save(existingMeeting);
@@ -112,8 +141,8 @@ public class MeetingServiceImpl implements MeetingService {
 
     //모임 상세 페이지 조회
     @Override
-    public Optional<MeetingResponseDto> getMeetingDetailById(UUID id) {
-        Optional<Meeting> meetingOptional = meetingRepository.findById(id);
+    public Optional<MeetingResponseDto> getMeetingDetailById(UUID meetingUuid) {
+        Optional<Meeting> meetingOptional = meetingRepository.findById(meetingUuid);
         return meetingOptional.map(this::mapToMeetingResponseDto);
     }
 
@@ -125,6 +154,7 @@ public class MeetingServiceImpl implements MeetingService {
                 .meetingTime(meeting.getMeetingTime())
                 .meetingLocation(meeting.getMeetingLocation())
                 .meetingContent(meeting.getMeetingContent())
+                .meetingFee(meeting.getMeetingFee())
                 .build();
     }
 
