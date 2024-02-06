@@ -1,18 +1,13 @@
 package com.woowaSisters.woowaSisters.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class TokenValueDTO {
-    private String tokenValue;
+//    private String tokenValue;
+    private String accessToken;
+    private String refreshToken;
 
-    // 기본 생성자
-    public void TokenValueDTO() {
-    }
-
-    // Getter와 Setter
-    public String getTokenValue() {
-        return tokenValue;
-    }
-
-    public void setTokenValue(String tokenValue) {
-        this.tokenValue = tokenValue;
-    }
 }
