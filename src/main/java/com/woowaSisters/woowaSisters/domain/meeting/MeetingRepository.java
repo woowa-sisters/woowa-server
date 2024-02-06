@@ -16,7 +16,7 @@ public interface MeetingRepository extends JpaRepository<Meeting, UUID> {
     List<Meeting> findByMeetingTitle(String meetingTitle);
 
     //bookId를 이용한 조회
-    Optional<Meeting> findByBookId(Long bookId);
+    Optional<Meeting> findByBookId(String bookId);
 
     Optional<Meeting> findById(UUID meetingUuid);
 

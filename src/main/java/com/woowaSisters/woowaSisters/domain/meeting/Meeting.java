@@ -45,7 +45,7 @@ public class Meeting {
     private String meetingTitle;
 
     @Column(name = "book_id")
-    private Long bookId;
+    private String bookId;
 
     @Column(name = "attendees")
     private Integer meetingAttendees;
@@ -57,6 +57,7 @@ public class Meeting {
     private String meetingLocation;
 
     @Column(name = "content", columnDefinition = "LONGTEXT")
+    @JsonProperty("content")
     private String meetingContent;
 
     @JsonProperty("uuid")
@@ -80,9 +81,7 @@ public class Meeting {
     }
 
     @JsonProperty("bookId")
-    public Long getBookId() {
-        return bookId;
-    }
+    public String getBookId() { return bookId; }
 
     @JsonProperty("attendees")
     public Integer getAttendees() {
@@ -104,9 +103,6 @@ public class Meeting {
         return meetingContent;
     }
 
-    public void setMeetingTime(long meetingTime) {
-        this.meetingTime = meetingTime;
-    }
 
     @Builder
     public Meeting(String meetingTitle, User user ,Integer meetingAttendees,
