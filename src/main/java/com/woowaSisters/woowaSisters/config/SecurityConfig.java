@@ -1,6 +1,7 @@
 package com.woowaSisters.woowaSisters.config;
 
 
+import com.woowaSisters.woowaSisters.filter.CustomAuthenticationFilter;
 import com.woowaSisters.woowaSisters.oauth.AuthService;
 import com.woowaSisters.woowaSisters.oauth.PrincipalOAuth2DetailsService;
 import com.woowaSisters.woowaSisters.oauth.jwt.JwtTokenProvider;
@@ -22,6 +23,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import javax.servlet.Filter;
 
 
 //@RequiredArgsConstructor
@@ -143,12 +147,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final AuthService authService;
     private final JwtTokenProvider jwtTokenProvider;
 
+    private final CustomAuthenticationFilter customAuthenticationFilter;
+
 
     @Autowired
-    public SecurityConfig(PrincipalOAuth2DetailsService principalOAuth2DetailsService, AuthService authService, JwtTokenProvider jwtTokenProvider) {
+    public SecurityConfig(CustomAuthenticationFilter customAuthenticationFilter, PrincipalOAuth2DetailsService principalOAuth2DetailsService, AuthService authService, JwtTokenProvider jwtTokenProvider) {
         this.principalOAuth2DetailsService = principalOAuth2DetailsService;
         this.authService = authService;
         this.jwtTokenProvider = jwtTokenProvider;
+        this.customAuthenticationFilter = customAuthenticationFilter;
     }
 
     @Bean
@@ -160,6 +167,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
+                .addFilterBefore(customAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
                 .and()
@@ -172,10 +180,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .oauth2Login()
                 .userInfoEndpoint()
+                
                 .userService(principalOAuth2DetailsService)
 
                 .and()
-
                 .successHandler(new OAuth2SuccessHandler(jwtTokenProvider,authService));
 
     }
