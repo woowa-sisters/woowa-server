@@ -7,12 +7,13 @@ import lombok.Setter;
 
 import javax.persistence.Column;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Getter
 @Setter
 @NoArgsConstructor
 public class SubBookListDTO {
-    private Long id;
+    private UUID id;
     private LocalDateTime datetime;
     private Long userId;
     private Long bookId;

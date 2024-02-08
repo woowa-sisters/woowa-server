@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -37,5 +38,15 @@ public class SubBookServiceImpl implements SubBookService{
     public SubBook saveSubBook(SubBookSaveDTO entity) {
         SubBook subBook = entity.toEntity();
         return subBookRepository.save(subBook);
+    }
+
+    @Override
+    public void deleteSubBook(UUID id){
+        subBookRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteSubBook(Long userId, Long bookId){
+        subBookRepository.deleteByBookId(userId, bookId);
     }
 }

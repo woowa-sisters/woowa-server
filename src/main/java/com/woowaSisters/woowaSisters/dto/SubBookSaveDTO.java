@@ -5,11 +5,12 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Getter
 @NoArgsConstructor
 public class SubBookSaveDTO {
-    private Long id;
+    private UUID id;
     private LocalDateTime datetime;
     private Long userId;
     private Long bookId;

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.UUID;
 
 @CrossOrigin(origins = "http://localhost:4000")
 
@@ -38,12 +39,19 @@ public class SubBookController {
     }
 
     @PostMapping("/save")
-    public SubBook subscribeBook(@RequestBody SubBookSaveDTO subBook){
+    public SubBook saveSubscribeBook(@RequestBody SubBookSaveDTO subBook){
         return subBookService.saveSubBook(subBook);
 
     }
 
-    /*@PostMapping("/save")
-    public */
+    // userId, bookId 구분?
+    @DeleteMapping("/{id}")
+    public void deleteSubscribeBook(@PathVariable("id") UUID id){
+        subBookService.deleteSubBook(id);
+    }
 
+    @DeleteMapping("/{userId}/{bookId}")
+    public void deleteSubscribeBook(@PathVariable("userId") Long userId, @PathVariable("bookId") Long bookId){
+        subBookService.deleteSubBook(userId, bookId);
+    }
 }
